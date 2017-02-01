@@ -10,6 +10,11 @@
                 view: 'views/login.view.client.html',
                 controller: 'LoginController',
             },
+            register: {
+                route: '/register',
+                view: 'views/register.view.client.html',
+                controller: 'RegisterController',
+            },
             profile: {
                 route: '/profile/:uid',
                 view: 'views/profile.view.client.html',
