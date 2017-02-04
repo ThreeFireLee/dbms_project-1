@@ -1,6 +1,18 @@
 module.exports = function (app, db) {
-    db.query('select name from t1', function (error, results, fields) {
-        if (error) throw error;
-        console.log(results);
-    });
+
+    function dbQuery(sql, res) {
+        sql = sql.replace(/^\s*/gm, '');
+        console.log(`>>>\n${sql}\n`);
+        db.query(sql, function (error, results, fields) {
+            if (error) console.log(error);
+            res.json(results);
+        });
+    }
+
+    let services = {
+        user: require("./services/user.service.server.js")(dbQuery),
+    };
+
+    require('./api.server.js')(app, services);
+
 };

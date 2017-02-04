@@ -14,7 +14,7 @@ var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'cs5200'
+    database: 'dbms_project'
 });
 
 require("./server/app-server.js")(app, db);

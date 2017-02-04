@@ -48,6 +48,7 @@
          * Initialize given view controller, then callback after finishing
          */
         function initController(vm, callback) {
+            vm.uid = $routeParams.uid;
             if (callback !== undefined) callback();
         }
     }
