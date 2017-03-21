@@ -1,6 +1,10 @@
 <h1>Register</h1>
 <form method="post" action="/api/user/register">
-    <input type="text" name="username" placeholder="username">
+    <input type="email" name="email" placeholder="email">
     <input type="password" name="password" placeholder="password">
+    <select name="type" id="type">
+        <option selected>Buyer</option>
+        <option >Seller</option>
+    </select>
     <input type="submit" value="Register">
 </form>

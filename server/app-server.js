@@ -1,16 +1,9 @@
 module.exports = function (app, db) {
 
-    function dbQuery(sql, res) {
-        sql = sql.replace(/^\s*/gm, '');
-        console.log(`>>>\n${sql}\n`);
-        db.query(sql, function (error, results, fields) {
-            if (error) console.log(error);
-            res.json(results);
-        });
-    }
-
     let services = {
-        user: require("./services/user.service.server.js")(dbQuery),
+        user: require("./services/user.service.server.js")(db),
+        seller: require("./services/seller.service.server.js")(db),
+        buyer: require("./services/buyer.service.server.js")(db),
     };
 
     require('./api.server.js')(app, services);

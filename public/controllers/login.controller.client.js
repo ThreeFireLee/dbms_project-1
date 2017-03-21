@@ -20,7 +20,7 @@
                         let uid = res.data[0].id;
                         $location.path('/profile/' + uid);
                     } else {
-                        vm.error = 'incorrect username or password';
+                        vm.error = 'incorrect email or password';
                     }
                 }
             );
