@@ -77,7 +77,7 @@ create table if not exists `Item`(
 );
 
 create table if not exists `ShoppingCart`(
-	quantity int not null default 0,
+	`quantity` int not null default 0,
 	`buyer` int not null,
 	foreign key (`buyer`) references `Buyer`(`role`)
 	on update cascade on delete cascade,
@@ -85,14 +85,4 @@ create table if not exists `ShoppingCart`(
 	foreign key (`item`) references `Item`(`id`)
 	on update cascade on delete cascade,
 	primary key (`buyer`, `item`)
-);
-
-create table if not exists `Inventory`(
-	`seller` int not null,
-	foreign key (`seller`) references `Seller`(`role`)
-	on update cascade on delete cascade,
-	`item` int not null,
-	foreign key (`item`) references `Item`(`id`)
-	on update cascade on delete cascade,
-	primary key (`seller`, `item`)
 );
