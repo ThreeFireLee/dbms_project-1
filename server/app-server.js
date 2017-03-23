@@ -6,7 +6,13 @@ module.exports = function (app, db) {
         console.log('exec -> ' + sql);
         db.query(sql, (error, results, fields) => {
             if (error) throw error;
-            callback(results, fields);
+            if (typeof callback === 'function') {
+                callback(results, fields);
+            }
+            else {
+                // callback is actually used as res
+                callback.json(results);
+            }
             console.log('done -> ' + sql);
         });
     }

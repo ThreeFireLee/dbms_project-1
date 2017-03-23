@@ -1,10 +1,12 @@
 <h1>Register</h1>
-<form method="post" action="/api/user/register">
-    <input type="email" name="email" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    <select name="type" id="type">
+<form>
+    <input type="email" placeholder="email" ng-model="vm.user.email">
+    <input type="password" placeholder="password" ng-model="vm.user.password">
+    <label for="type">User Type</label>
+    <select id="type" ng-model="vm.user.type">
         <option selected>Buyer</option>
-        <option >Seller</option>
+        <option>Seller</option>
     </select>
-    <input type="submit" value="Register">
+    <input type="button" value="Register" ng-click="vm.register()">
 </form>
+<button ng-click="vm.login()">log-in now</button>

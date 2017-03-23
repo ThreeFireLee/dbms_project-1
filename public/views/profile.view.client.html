@@ -1,2 +1,9 @@
 <h1>Profile</h1>
-<h2>Hello, {{vm.user.username}}</h2>
+<h2>Hello, {{vm.user.id}}</h2>
+{{vm.user}}
+<form>
+    <label for="user_email">email</label>
+    <input type="text" id="user_email" ng-model="vm.user.email">
+    <label for="user_dob">date of birth</label>
+    <input type="date" id="user_dob" ng-model="vm.user.dateOfBirth">
+</form>

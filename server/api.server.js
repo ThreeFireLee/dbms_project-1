@@ -3,6 +3,7 @@ module.exports = function (app, services) {
     app.get('/api/user/id/:uid', services.user.findUserById);
     app.post('/api/user/register', services.user.register);
     app.post('/api/user/login', services.user.login);
+    app.put('/api/user/:uid/update/profile', services.user.updateProfile);
 
     app.post('/api/seller/:uid/item/create', services.seller.createItem);
     app.get('/api/seller/:uid/item/list', services.seller.listItems);

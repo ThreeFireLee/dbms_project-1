@@ -4,6 +4,7 @@ module.exports = function (db, dbQuery) {
         register: register,
         login: login,
         findUserById: findUserById,
+        updateProfile: updateProfile,
     };
 
     function register(req, res) {
@@ -26,7 +27,7 @@ module.exports = function (db, dbQuery) {
                             });
                         }
                         console.log(`registered: (${user.type}) ${user.email}`);
-                        res.json(uid);
+                        res.json(results);
                     });
                 });
             });
@@ -37,24 +38,21 @@ module.exports = function (db, dbQuery) {
         let user = req.body;
         let query, values;
         console.log(`logging-in: ${user.email}`);
-        query = "select id from `Role` where `email`=? and `password`=?";
+        query = "select `id` from `Role` where `email`=? and `password`=?";
         values = [user.email, user.password];
-        dbQuery(query, values, (results, fields)=>{
-            console.log(`logged-in: ${user.email}`);
-            res.json(results);
-        });
+        dbQuery(query, values, res);
     }
 
     function findUserById(req, res) {
         let uid = req.params.uid;
         let query, values;
         console.log(`finding user # ${uid}`);
-        query = "select id from `Role` where `id`=?";
+        query = "select `email`,`dateOfBirth` from `Role` where `id`=?";
         values = [uid];
-        dbQuery(query, values, (results, fields) => {
-            console.log(`found user # ${uid}`);
-            res.json(results);
-        });
+        dbQuery(query, values, res);
     }
 
+    function updateProfile(req, res) {
+
+    }
 };

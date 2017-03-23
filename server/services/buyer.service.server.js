@@ -18,9 +18,7 @@ module.exports = function (db, dbQuery) {
         query = "select `id`,`name`,`price`,`quantity`,`description` "
             + "from `Item` where `name` like ? or `description` like ?";
         values = [keyword, keyword];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results);
-        });
+        dbQuery(query, values, res);
     }
 
     function checkout(req, res) {
@@ -35,9 +33,7 @@ module.exports = function (db, dbQuery) {
             + "(`name`,`phone`,`postal`,`street`,`apt`,`state`,`country`,`role`) "
             + "values (?,?,?,?,?,?,?,?)";
         values = [addr.name, addr.phone, addr.postal, addr.street, addr.apt, addr.state, addr.country, role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.insertId);
-        });
+        dbQuery(query, values, res);
     }
 
     function editAddress(req, res) {
@@ -49,9 +45,7 @@ module.exports = function (db, dbQuery) {
             + "`name`=?,`phone`=?,`postal`=?,`street`=?,`apt`=?,`state`=?,`country`=? "
             + "where `role`=? and `id`=?";
         values = [addr.name, addr.phone, addr.postal, addr.street, addr.apt, addr.state, addr.country, role, addrID];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.affectedRows);
-        });
+        dbQuery(query, values, res);
     }
 
     function deleteAddress(req, res) {
@@ -60,9 +54,7 @@ module.exports = function (db, dbQuery) {
         let query, values;
         query = "delete `Address` where `role`=? and `id`=?";
         values = [role, addrID];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.affectedRows);
-        });
+        dbQuery(query, values, res);
     }
 
     function createPayment(req, res) {
@@ -73,9 +65,7 @@ module.exports = function (db, dbQuery) {
             + "(`creditType`,`cardNumber`,`validDate`,`cardHolder`,`role`) "
             + "values (?,?,?,?,?)";
         values = [pay.creditType, pay.cardNumber, pay.validDate, pay.cardHolder, role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.insertId);
-        });
+        dbQuery(query, values, res);
     }
 
     function editPayment(req, res) {
@@ -87,9 +77,7 @@ module.exports = function (db, dbQuery) {
             + "`creditType`=?,`cardNumber`=?,`validDate`=?,`cardHolder`=? "
             + "where `role`=? and `id`=?";
         values = [pay.creditType, pay.cardNumber, pay.validDate, pay.cardHolder, role, payID];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.affectedRows);
-        });
+        dbQuery(query, values, res);
     }
 
     function deletePayment(req, res) {
@@ -98,9 +86,7 @@ module.exports = function (db, dbQuery) {
         let query, values;
         query = "delete `Payment` where `role`=? and `id`=?";
         values = [role, payID];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.affectedRows);
-        });
+        dbQuery(query, values, res);
     }
 
     function listOrders(req, res) {
@@ -108,8 +94,6 @@ module.exports = function (db, dbQuery) {
         let query, values;
         query = "select `id`,`createTime`,`address` from `Order` where `buyer`=?";
         values = [role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results);
-        });
+        dbQuery(query, values, res);
     }
 };

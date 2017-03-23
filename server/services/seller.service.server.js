@@ -16,9 +16,7 @@ module.exports = function (db, dbQuery) {
             + "(`name`, `price`, `quantity`, `description`, `seller`, `order`) "
             + "values (?,?,?,?,?,?)";
         values = [item.name, item.price, item.quantity, item.description, role, item.order];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.insertId);
-        });
+        dbQuery(query, values, res);
     }
 
     function listItems(req, res) {
@@ -27,9 +25,7 @@ module.exports = function (db, dbQuery) {
         query = "select `id`,`name`,`price`,`quantity`,`description` from Item "
             + "where `seller`=? and `order` is null";
         values = [role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results);
-        });
+        dbQuery(query, values, res);
     }
 
     function editItem(req, res) {
@@ -41,9 +37,7 @@ module.exports = function (db, dbQuery) {
             + "`name=?`, `price`=?, `quantity`=?, `description`=? "
             + "where `id`=? and `seller`=? and `order` is null";
         values = [item.name, item.price, item.quantity, item.description, itemID, role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.affectedRows);
-        });
+        dbQuery(query, values, res);
     }
 
     function deleteItem(req, res) {
@@ -52,9 +46,7 @@ module.exports = function (db, dbQuery) {
         let query, values;
         query = "delete from `Item` where `id`=? and `seller`=? and `order` is null";
         values = [itemID, role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results.affectedRows);
-        });
+        dbQuery(query, values, res);
     }
 
     function listOrders(req, res) {
@@ -66,8 +58,6 @@ module.exports = function (db, dbQuery) {
             + "where o.`id`=i.`order` and i.`seller`=?"
             + ")";
         values = [role];
-        dbQuery(query, values, (results, fields) => {
-            res.json(results);
-        });
+        dbQuery(query, values, res);
     }
 };
