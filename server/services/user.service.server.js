@@ -5,6 +5,7 @@ module.exports = function (db, dbQuery) {
         login: login,
         findUserById: findUserById,
         updateProfile: updateProfile,
+        findUserTypeById: findUserTypeById,
     };
 
     function register(req, res) {
@@ -38,7 +39,7 @@ module.exports = function (db, dbQuery) {
         let user = req.body;
         let query, values;
         console.log(`logging-in: ${user.email}`);
-        query = "select `id` from `Role` where `email`=? and `password`=?";
+        query = "select r.id from `Role` as r where r.email=? and r.password=?";
         values = [user.email, user.password];
         dbQuery(query, values, res);
     }
@@ -47,8 +48,19 @@ module.exports = function (db, dbQuery) {
         let uid = req.params.uid;
         let query, values;
         console.log(`finding user # ${uid}`);
-        query = "select `email`,`dateOfBirth` from `Role` where `id`=?";
+        query = "select r.email, r.dateOfBirth, from `Role` as r where r.id=?";
         values = [uid];
+        dbQuery(query, values, res);
+    }
+
+    function findUserTypeById(req, res) {
+        let uid = req.params.uid;
+        let query, values;
+        query = "select case " +
+            "when exists(select * from `Buyer` where `role`=?) then 'Buyer' " +
+            "when exists(select * from `Seller` where `role`=?) then 'Seller' " +
+            "end as `type` ";
+        values = [uid, uid];
         dbQuery(query, values, res);
     }
 

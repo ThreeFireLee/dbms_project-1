@@ -12,9 +12,9 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let item = req.body;
         let query, values;
-        query = "insert into `Item` "
-            + "(`name`, `price`, `quantity`, `description`, `seller`, `order`) "
-            + "values (?,?,?,?,?,?)";
+        query = "insert into `Item` " +
+            "(`name`, `price`, `quantity`, `description`, `seller`, `order`) " +
+            "values (?,?,?,?,?,?)";
         values = [item.name, item.price, item.quantity, item.description, role, item.order];
         dbQuery(query, values, res);
     }
@@ -22,8 +22,8 @@ module.exports = function (db, dbQuery) {
     function listItems(req, res) {
         let role = req.params.uid;
         let query, values;
-        query = "select `id`,`name`,`price`,`quantity`,`description` from Item "
-            + "where `seller`=? and `order` is null";
+        query = "select i.id,i.name,i.price,i.quantity,i.description from `Item` " +
+            "where i.seller=? and i.order is null";
         values = [role];
         dbQuery(query, values, res);
     }
@@ -33,9 +33,9 @@ module.exports = function (db, dbQuery) {
         let itemID = req.params.iid;
         let item = req.body;
         let query, values;
-        query = "update `Item` set "
-            + "`name=?`, `price`=?, `quantity`=?, `description`=? "
-            + "where `id`=? and `seller`=? and `order` is null";
+        query = "update `Item` as i set " +
+            "i.name=?, i.price=?, i.quantity=?, i.description=? " +
+            "where i.id=? and i.seller=? and i.order is null";
         values = [item.name, item.price, item.quantity, item.description, itemID, role];
         dbQuery(query, values, res);
     }
@@ -44,7 +44,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let itemID = req.params.iid;
         let query, values;
-        query = "delete from `Item` where `id`=? and `seller`=? and `order` is null";
+        query = "delete from `Item` as i where i.id=? and i.seller=? and i.order is null";
         values = [itemID, role];
         dbQuery(query, values, res);
     }
@@ -52,11 +52,11 @@ module.exports = function (db, dbQuery) {
     function listOrders(req, res) {
         let role = req.params.uid;
         let query, values;
-        query = "select `id`,`createTime`,`address`,`buyer` from `Order` as o "
-            + "where exists( "
-            + "select * from `Item` as i "
-            + "where o.`id`=i.`order` and i.`seller`=?"
-            + ")";
+        query = "select o.id,o.createTime,o.address,o.buyer from `Order` as o " +
+            "where exists( " +
+            "select * from `Item` as i " +
+            "where o.id=i.order and i.seller=?" +
+            ")";
         values = [role];
         dbQuery(query, values, res);
     }

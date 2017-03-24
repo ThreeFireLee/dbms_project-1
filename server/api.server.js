@@ -1,6 +1,7 @@
 module.exports = function (app, services) {
 
     app.get('/api/user/id/:uid', services.user.findUserById);
+    app.get('/api/user/id/:uid/type', services.user.findUserTypeById);
     app.post('/api/user/register', services.user.register);
     app.post('/api/user/login', services.user.login);
     app.put('/api/user/:uid/update/profile', services.user.updateProfile);

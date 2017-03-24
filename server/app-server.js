@@ -6,6 +6,7 @@ module.exports = function (app, db) {
         console.log('exec -> ' + sql);
         db.query(sql, (error, results, fields) => {
             if (error) throw error;
+            console.log(results);
             if (typeof callback === 'function') {
                 callback(results, fields);
             }
@@ -13,7 +14,6 @@ module.exports = function (app, db) {
                 // callback is actually used as res
                 callback.json(results);
             }
-            console.log('done -> ' + sql);
         });
     }
 

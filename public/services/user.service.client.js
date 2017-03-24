@@ -9,6 +9,7 @@
             findUserById: findUserById,
             login: login,
             updateProfile: updateProfile,
+            findUserTypeById: findUserTypeById,
         };
 
         function register(user) {
@@ -25,6 +26,10 @@
 
         function updateProfile(uid, user) {
             return $http.put(`'/api/user/${uid}/update/profile'`, user);
+        }
+
+        function findUserTypeById(uid){
+            return $http.get(`/api/user/id/${uid}/type`);
         }
 
     }

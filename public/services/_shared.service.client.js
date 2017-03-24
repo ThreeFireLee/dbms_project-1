@@ -20,6 +20,11 @@
                 view: 'views/profile.view.client.html',
                 controller: 'ProfileController',
             },
+            browse: {
+                route: '/home/:uid',
+                view: 'views/browse.view.client.html',
+                controller: 'BrowseController',
+            },
         };
 
         return {

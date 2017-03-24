@@ -15,8 +15,8 @@ module.exports = function (db, dbQuery) {
     function searchItem(req, res) {
         let keyword = `%${req.params.keywords}%`;
         let query, values;
-        query = "select `id`,`name`,`price`,`quantity`,`description` "
-            + "from `Item` where `name` like ? or `description` like ?";
+        query = "select i.id, i.name, i.price, i.quantity, i.description` " +
+            "from `Item` as i where i.name like ? or i.description like ?";
         values = [keyword, keyword];
         dbQuery(query, values, res);
     }
@@ -29,9 +29,9 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let addr = req.body;
         let query, values;
-        query = "insert into `Address` "
-            + "(`name`,`phone`,`postal`,`street`,`apt`,`state`,`country`,`role`) "
-            + "values (?,?,?,?,?,?,?,?)";
+        query = "insert into `Address` " +
+            "(`name`,`phone`,`postal`,`street`,`apt`,`state`,`country`,`role`) " +
+            "values (?,?,?,?,?,?,?,?)";
         values = [addr.name, addr.phone, addr.postal, addr.street, addr.apt, addr.state, addr.country, role];
         dbQuery(query, values, res);
     }
@@ -41,9 +41,9 @@ module.exports = function (db, dbQuery) {
         let addrID = req.params.aid;
         let addr = req.body;
         let query, values;
-        query = "update `Address` set "
-            + "`name`=?,`phone`=?,`postal`=?,`street`=?,`apt`=?,`state`=?,`country`=? "
-            + "where `role`=? and `id`=?";
+        query = "update `Address` as a set "
+            + "a.name=?, a.phone=?, a.postal=?, a.street=?, a.apt=?, a.state=?, a.country=? "
+            + "where a.role=? and a.id=?";
         values = [addr.name, addr.phone, addr.postal, addr.street, addr.apt, addr.state, addr.country, role, addrID];
         dbQuery(query, values, res);
     }
@@ -52,7 +52,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let addrID = req.params.aid;
         let query, values;
-        query = "delete `Address` where `role`=? and `id`=?";
+        query = "delete from `Address` as a where a.role=? and a.id=?";
         values = [role, addrID];
         dbQuery(query, values, res);
     }
@@ -61,9 +61,9 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let pay = req.body;
         let query, values;
-        query = "insert into `Payment` "
-            + "(`creditType`,`cardNumber`,`validDate`,`cardHolder`,`role`) "
-            + "values (?,?,?,?,?)";
+        query = "insert into `Payment` " +
+            "(`creditType`,`cardNumber`,`validDate`,`cardHolder`,`role`) " +
+            "values (?,?,?,?,?)";
         values = [pay.creditType, pay.cardNumber, pay.validDate, pay.cardHolder, role];
         dbQuery(query, values, res);
     }
@@ -73,9 +73,9 @@ module.exports = function (db, dbQuery) {
         let payID = req.params.pid;
         let pay = req.body;
         let query, values;
-        query = "update `Payment` set "
-            + "`creditType`=?,`cardNumber`=?,`validDate`=?,`cardHolder`=? "
-            + "where `role`=? and `id`=?";
+        query = "update `Payment` as p set " +
+            "p.creditType=?, p.cardNumber=?, p.validDate=?, p.cardHolder=? " +
+            "where p.role=? and p.id=?";
         values = [pay.creditType, pay.cardNumber, pay.validDate, pay.cardHolder, role, payID];
         dbQuery(query, values, res);
     }
@@ -84,7 +84,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let payID = req.params.pid;
         let query, values;
-        query = "delete `Payment` where `role`=? and `id`=?";
+        query = "delete from `Payment` as p where p.role=? and p.id=?";
         values = [role, payID];
         dbQuery(query, values, res);
     }
@@ -92,7 +92,7 @@ module.exports = function (db, dbQuery) {
     function listOrders(req, res) {
         let role = req.params.uid;
         let query, values;
-        query = "select `id`,`createTime`,`address` from `Order` where `buyer`=?";
+        query = "select o.id, o.createTime, o.address from `Order` as o where o.buyer=?";
         values = [role];
         dbQuery(query, values, res);
     }
