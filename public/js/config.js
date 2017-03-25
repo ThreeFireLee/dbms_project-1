@@ -4,7 +4,7 @@
         .config(Config);
 
     function Config($routeProvider, SharedServiceProvider) {
-        var maps = SharedServiceProvider.$get().maps;
+        let maps = SharedServiceProvider.$get().maps;
 
         $.each(maps, (_, item) => {
             $routeProvider

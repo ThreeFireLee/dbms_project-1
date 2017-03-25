@@ -21,4 +21,7 @@ module.exports = function (app, services) {
     app.put('/api/buyer/:uid/payment/edit/:pid', services.buyer.editPayment);
     app.delete('/api/buyer/:uid/payment/delete/:pid', services.buyer.deletePayment);
     app.get('/api/buyer/:uid/order/list', services.buyer.listOrders);
+    app.get('/api/buyer/items/featured', services.buyer.featuredItems);
+    app.get('/api/buyer/:uid/shoppingcart/list', services.buyer.listShoppingCartItems);
+    app.post('/api/buyer/:uid/shoppingcart/add', services.buyer.addItemToCart);
 };

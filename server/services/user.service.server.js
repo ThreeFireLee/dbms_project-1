@@ -27,7 +27,6 @@ module.exports = function (db, dbQuery) {
                                 throw err;
                             });
                         }
-                        console.log(`registered: (${user.type}) ${user.email}`);
                         res.json(results);
                     });
                 });
@@ -48,7 +47,7 @@ module.exports = function (db, dbQuery) {
         let uid = req.params.uid;
         let query, values;
         console.log(`finding user # ${uid}`);
-        query = "select r.email, r.dateOfBirth, from `Role` as r where r.id=?";
+        query = "select r.email, r.dateOfBirth from `Role` as r where r.id=?";
         values = [uid];
         dbQuery(query, values, res);
     }

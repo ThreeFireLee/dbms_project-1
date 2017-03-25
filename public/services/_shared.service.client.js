@@ -3,8 +3,8 @@
         .module("App")
         .factory("SharedService", SharedService);
 
-    function SharedService($routeParams) {
-        var maps = {
+    function SharedService($routeParams, $location, UserService) {
+        let maps = {
             login: {
                 route: '/login',
                 view: 'views/login.view.client.html',
@@ -25,12 +25,23 @@
                 view: 'views/browse.view.client.html',
                 controller: 'BrowseController',
             },
+            inventory: {
+                route: '/inventory/:uid',
+                view: 'views/inventory.view.client.html',
+                controller: 'InventoryController',
+            },
+            orders: {
+                route: '/orders/:uid',
+                view: 'views/orders.view.client.html',
+                controller: 'OrdersController',
+            },
         };
 
         return {
             maps: maps,
             getRoute: getRoute,
             initController: initController,
+            homePage: homePage,
         };
 
         /*
@@ -54,7 +65,21 @@
          */
         function initController(vm, callback) {
             vm.uid = $routeParams.uid;
+            vm.logout = logout;
+
             if (callback !== undefined) callback();
+
+            function logout(){
+                $location.path(vm.shared.getRoute('login'));
+            }
+        }
+
+        function homePage(uid) {
+            UserService.findUserTypeById(uid).then(res => {
+                let userType = res.data[0].type;
+                redir = {Buyer: "browse", Seller: "inventory"};
+                $location.path(getRoute(redir[userType], {uid: uid}));
+            });
         }
     }
 })

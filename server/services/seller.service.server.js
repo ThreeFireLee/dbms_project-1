@@ -22,8 +22,9 @@ module.exports = function (db, dbQuery) {
     function listItems(req, res) {
         let role = req.params.uid;
         let query, values;
-        query = "select i.id,i.name,i.price,i.quantity,i.description from `Item` " +
-            "where i.seller=? and i.order is null";
+        query = "select i.id,i.name,i.price,i.quantity,i.description from `Item` as i " +
+            "where i.seller=? and i.order is null " +
+            "order by id desc";
         values = [role];
         dbQuery(query, values, res);
     }

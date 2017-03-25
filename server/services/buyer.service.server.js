@@ -10,6 +10,9 @@ module.exports = function (db, dbQuery) {
         editPayment: editPayment,
         deletePayment: deletePayment,
         listOrders: listOrders,
+        featuredItems: featuredItems,
+        listShoppingCartItems: listShoppingCartItems,
+        addItemToCart: addItemToCart,
     };
 
     function searchItem(req, res) {
@@ -94,6 +97,37 @@ module.exports = function (db, dbQuery) {
         let query, values;
         query = "select o.id, o.createTime, o.address from `Order` as o where o.buyer=?";
         values = [role];
+        dbQuery(query, values, res);
+    }
+
+    function featuredItems(req, res) {
+        let query, values;
+        query = "select i.id, i.name, i.price from `Item` as i " +
+            "where i.order is null order by id desc";
+        values = [];
+        dbQuery(query, values, res);
+    }
+
+    function listShoppingCartItems(req, res) {
+        let role = req.params.uid;
+        let query, values;
+        query = "select i.id, i.name, i.price, c.quantity " +
+            "from `Buyer` as b, `Item` as i, `ShoppingCart` as c " +
+            "where b.role=? and c.buyer=b.role and c.item=i.id";
+        values = [role];
+        dbQuery(query, values, res);
+    }
+
+    function addItemToCart(req, res) {
+        let role = req.params.uid;
+        let iid = req.body.iid;
+        let quantity = req.body.quantity;
+        let query, values;
+        query = "insert into `ShoppingCart` " +
+            "(`buyer`, `item`, `quantity`) values(?, ?, ?) " +
+            "on duplicate key update `quantity`=`quantity`+?";
+        values = [role, iid, quantity, quantity];
+        console.log(role, iid, quantity);
         dbQuery(query, values, res);
     }
 };

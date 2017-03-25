@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static(__dirname + '/public'));
 app.use('/lib', express.static(__dirname + '/node_modules'));
 
-var mysql = require('mysql');
-var db = mysql.createConnection({
+let mysql = require('mysql');
+let db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
@@ -19,7 +19,7 @@ var db = mysql.createConnection({
 
 require("./server/app-server.js")(app, db);
 
-var port = 3000;
+let port = 3000;
 app.listen(port);
 
 console.log('server started, listening port', port);

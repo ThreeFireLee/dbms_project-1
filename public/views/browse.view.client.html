@@ -1,2 +1,38 @@
+<nav-bar></nav-bar>
 <h1>Browse the Store</h1>
-{{vm.userType}}
+
+<div ng-if="vm.shoppingCartItems.length">
+    <h2>Shopping Cart</h2>
+    <div ng-repeat="cartItem in vm.shoppingCartItems">
+        {{cartItem}}
+    </div>
+</div>
+<div>
+    <h2>Featured Items</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ftItem in vm.featuredItems">
+                <td>{{ftItem.name}}</td>
+                <td>{{ftItem.price}}</td>
+                <td>
+                    <input type="number" style="width: 4em" ng-model="ftItem.quantity">
+                </td>
+                <td>
+                    <button ng-click="vm.addToCart(ftItem.id, ftItem.quantity); ftItem.quantity = 1">
+                        add to cart
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
