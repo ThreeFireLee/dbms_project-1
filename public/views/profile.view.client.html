@@ -3,8 +3,21 @@
 <h2>Hello, {{vm.user.id}}</h2>
 {{vm.user}}
 <form>
-    <label for="user_email">email</label>
-    <input type="text" id="user_email" ng-model="vm.user.email">
-    <label for="user_dob">date of birth</label>
-    <input type="date" id="user_dob" ng-model="vm.user.dateOfBirth">
+    <div class="form-group">
+        <label for="user_email">email</label>
+        <input class="form-control" type="text" id="user_email" ng-model="vm.user.email">
+    </div>
+    <div class="form-group">
+        <label for="user_dob">date of birth</label>
+        <input class="form-control" type="text" id="user_dob" ng-model="vm.user.dateOfBirth">
+    </div>
+    <div class="form-group">
+        <label for="user_first">First Name</label>
+        <input class="form-control" type="text" id="user_first" ng-model="vm.user.first">
+        <label for="user_middle">Middle Name</label>
+        <input class="form-control" type="text" id="user_middle" ng-model="vm.user.middle">
+        <label for="user_last">Last Name</label>
+        <input class="form-control" type="text" id="user_last" ng-model="vm.user.last">
+    </div>
+    <input type="button" ng-click="vm.update()" value="update">
 </form>

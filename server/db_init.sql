@@ -7,9 +7,9 @@ create table if not exists `Role`(
 
 create table if not exists `Name`(
 	`role` int primary key auto_increment,
-	`first` varchar(200) not null,
+	`first` varchar(200),
 	`middle` varchar(200),
-	`last` varchar(200) not null,
+	`last` varchar(200),
 	foreign key (`role`) references `Role`(`id`)
 	on update cascade on delete cascade
 );

@@ -9,6 +9,7 @@
             loadOrders: loadOrders,
             loadShoppingCart: loadShoppingCart,
             addItemToCart: addItemToCart,
+            addPayMethod: addPayMethod,
         };
 
         function loadFeaturedItems() {
@@ -26,6 +27,10 @@
         function addItemToCart(uid, iid, quantity) {
             let item = {iid: iid, quantity: quantity || 1};
             return $http.post(`/api/buyer/${uid}/shoppingcart/add`, item);
+        }
+
+        function addPayMethod(){
+
         }
     }
 })();

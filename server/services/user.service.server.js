@@ -10,60 +10,61 @@ module.exports = function (db, dbQuery) {
 
     function register(req, res) {
         let user = req.body;
-        let query, values;
-        db.beginTransaction(err => {
-            if (err) throw err;
-            console.log(`registering: (${user.type}) ${user.email}`);
-            query = "insert into `Role` (`email`, `password`) values (?, ?)";
-            values = [user.email, user.password];
-            dbQuery(query, values, (results, fields) => {
-                uid = results.insertId;
-                query = "insert into ?? (`role`) values (?)";
-                values = [user.type, uid];
-                dbQuery(query, values, (results, fields) => {
-                    db.commit(err => {
-                        if (err) {
-                            return db.rollback(() => {
-                                throw err;
-                            });
-                        }
-                        res.json(results);
-                    });
-                });
-            });
-        });
+        let query = dbQuery(res);
+        query.add(
+            "insert into `Role` (`email`, `password`) values (?, ?)",
+            [user.email, user.password]);
+        query.add(
+            "insert into `Name` (`role`) values (?)",
+            ['@insertId']);
+        query.add(
+            "insert into ?? (`role`) values (?)",
+            [user.type, '@insertId']);
+        query.execute('register');
     }
 
     function login(req, res) {
         let user = req.body;
-        let query, values;
-        console.log(`logging-in: ${user.email}`);
-        query = "select r.id from `Role` as r where r.email=? and r.password=?";
-        values = [user.email, user.password];
-        dbQuery(query, values, res);
+        let query = dbQuery(res);
+        query.add(
+            "select r.id from `Role` as r where r.email=? and r.password=?",
+            [user.email, user.password]);
+        query.execute('login');
     }
 
     function findUserById(req, res) {
         let uid = req.params.uid;
-        let query, values;
-        console.log(`finding user # ${uid}`);
-        query = "select r.email, r.dateOfBirth from `Role` as r where r.id=?";
-        values = [uid];
-        dbQuery(query, values, res);
+        let query = dbQuery(res);
+        query.add(
+            "select r.email, r.dateOfBirth, m.first, m.middle, m.last " +
+            "from `Role` as r, `Name` as m " +
+            "where r.id=? and m.role=r.id",
+            [uid]);
+        query.execute('find user by id');
     }
 
     function findUserTypeById(req, res) {
         let uid = req.params.uid;
-        let query, values;
-        query = "select case " +
+        let query = dbQuery(res);
+        query.add(
+            "select case " +
             "when exists(select * from `Buyer` where `role`=?) then 'Buyer' " +
             "when exists(select * from `Seller` where `role`=?) then 'Seller' " +
-            "end as `type` ";
-        values = [uid, uid];
-        dbQuery(query, values, res);
+            "end as `type` ",
+            [uid, uid]);
+        query.execute();
     }
 
     function updateProfile(req, res) {
-
+        let uid = req.params.uid;
+        let user = req.body;
+        let query = dbQuery(res);
+        console.log(user);
+        query.add(
+            "update `Role` as r, `Name` as m " +
+            "set r.email=?, r.dateOfBirth=?, m.first=?, m.middle=?, m.last=? " +
+            "where r.id=m.role and r.id=?",
+            [user.email, user.dateOfBirth, user.first, user.middle, user.last, uid]);
+        query.execute('update profile')
     }
 };

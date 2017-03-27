@@ -11,54 +11,59 @@ module.exports = function (db, dbQuery) {
     function createItem(req, res) {
         let role = req.params.uid;
         let item = req.body;
-        let query, values;
-        query = "insert into `Item` " +
+        let query = dbQuery(res);
+        query.add(
+            "insert into `Item` " +
             "(`name`, `price`, `quantity`, `description`, `seller`, `order`) " +
-            "values (?,?,?,?,?,?)";
-        values = [item.name, item.price, item.quantity, item.description, role, item.order];
-        dbQuery(query, values, res);
+            "values (?,?,?,?,?,?)",
+            [item.name, item.price, item.quantity, item.description, role, item.order]);
+        query.execute();
     }
 
     function listItems(req, res) {
         let role = req.params.uid;
-        let query, values;
-        query = "select i.id,i.name,i.price,i.quantity,i.description from `Item` as i " +
+        let query = dbQuery(res);
+        query.add(
+            "select i.id,i.name,i.price,i.quantity,i.description from `Item` as i " +
             "where i.seller=? and i.order is null " +
-            "order by id desc";
-        values = [role];
-        dbQuery(query, values, res);
+            "order by id desc",
+            [role]);
+        query.execute();
     }
 
     function editItem(req, res) {
         let role = req.params.uid;
         let itemID = req.params.iid;
         let item = req.body;
-        let query, values;
-        query = "update `Item` as i set " +
+        let query = dbQuery(res);
+        query.add(
+            "update `Item` as i set " +
             "i.name=?, i.price=?, i.quantity=?, i.description=? " +
-            "where i.id=? and i.seller=? and i.order is null";
-        values = [item.name, item.price, item.quantity, item.description, itemID, role];
-        dbQuery(query, values, res);
+            "where i.id=? and i.seller=? and i.order is null",
+            [item.name, item.price, item.quantity, item.description, itemID, role]);
+        query.execute();
     }
 
     function deleteItem(req, res) {
         let role = req.params.uid;
         let itemID = req.params.iid;
-        let query, values;
-        query = "delete from `Item` as i where i.id=? and i.seller=? and i.order is null";
-        values = [itemID, role];
-        dbQuery(query, values, res);
+        let query = dbQuery(res);
+        query.add(
+            "delete from `Item` as i where i.id=? and i.seller=? and i.order is null",
+            [itemID, role]);
+        query.execute();
     }
 
     function listOrders(req, res) {
         let role = req.params.uid;
-        let query, values;
-        query = "select o.id,o.createTime,o.address,o.buyer from `Order` as o " +
+        let query = dbQuery(res);
+        query.add(
+            "select o.id,o.createTime,o.address,o.buyer from `Order` as o " +
             "where exists( " +
             "select * from `Item` as i " +
             "where o.id=i.order and i.seller=?" +
-            ")";
-        values = [role];
-        dbQuery(query, values, res);
+            ")",
+            [role]);
+        query.execute();
     }
 };

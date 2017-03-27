@@ -25,7 +25,7 @@
         }
 
         function updateProfile(uid, user) {
-            return $http.put(`'/api/user/${uid}/update/profile'`, user);
+            return $http.put(`/api/user/${uid}/profile/update`, user);
         }
 
         function findUserTypeById(uid){
