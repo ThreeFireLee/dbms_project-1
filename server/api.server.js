@@ -13,7 +13,7 @@ module.exports = function (app, services) {
     app.get('/api/seller/:uid/order/list', services.seller.listOrders);
 
     app.get('/api/buyer/search/item/:keywords', services.buyer.searchItem);
-    app.post('/api/buyer/checkout', services.buyer.checkout);
+    app.post('/api/buyer/:uid/checkout', services.buyer.checkout);
     app.get('/api/buyer/:uid/address/list', services.buyer.listAddresses);
     app.post('/api/buyer/:uid/address/create', services.buyer.createAddress);
     app.put('/api/buyer/:uid/address/edit/:aid', services.buyer.editAddress);

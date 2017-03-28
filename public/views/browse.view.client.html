@@ -6,8 +6,8 @@
     <div ng-repeat="cartItem in vm.shoppingCartItems">
         {{cartItem}}
     </div>
+    <a href="#!{{vm.shared.getRoute('checkout')}}" class="btn btn-default">checkout</a>
 </div>
-<button>checkout</button>
 <div>
     <h2>Featured Items</h2>
     <div class="table-responsive">

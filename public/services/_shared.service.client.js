@@ -25,6 +25,11 @@
                 view: 'views/browse.view.client.html',
                 controller: 'BrowseController',
             },
+            checkout: {
+                route: '/home/:uid/checkout',
+                view: 'views/checkout.view.client.html',
+                controller: 'CheckoutController',
+            },
             inventory: {
                 route: '/inventory/:uid',
                 view: 'views/inventory.view.client.html',

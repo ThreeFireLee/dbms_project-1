@@ -1,13 +1,16 @@
 module.exports = function (app, db) {
 
-    function dbQuery(res) {
+    function dbQuery(res, description) {
         let bundle = {
-            res: res,
-            queries: [
-                // {format: '', values: []}
-            ],
-            lastResult: null,
-        };
+                description: description,
+                res: res,
+                queries: [
+                    // {format: '', values: []}
+                ],
+                lastResults: [],
+                mainIndex: null,
+            }
+        ;
 
         return {
             add: addQuery.bind(bundle),
@@ -21,8 +24,9 @@ module.exports = function (app, db) {
             });
         }
 
-        function startTransaction(description) {
-            console.log('\033[33m[', description, ']\033[0m');
+        function startTransaction(mainIndex) {
+            this.mainIndex = mainIndex || 1;
+            console.log('\033[33m[', this.description, ']\033[0m');
             if (!this.queries.length) return;
             db.beginTransaction(function (err) {
                 if (err) throw err;
@@ -32,7 +36,7 @@ module.exports = function (app, db) {
 
         function continued(error, results, fields) {
             if (error) throw error;
-            this.lastResult = results;
+            this.lastResults.push(results);
             if (typeof results !== 'undefined') console.log('<<<', results);
             if (!this.queries.length) {
                 db.commit(function (err) {
@@ -40,13 +44,13 @@ module.exports = function (app, db) {
                         throw err;
                     });
                     console.log('='.repeat(80));
-                    this.res.json(results);
+                    this.res.json(this.lastResults[this.mainIndex]);
                 }.bind(this));
             } else {
                 let sql_prep = this.queries.shift();
                 sql_prep.values = sql_prep.values.map(val => {
                     if (typeof val === 'string' && val[0] === '@') {
-                        val = eval(val.replace('@', 'this.lastResult.'));
+                        val = eval(val.replace('@', 'this.lastResults'));
                     }
                     return val;
                 });

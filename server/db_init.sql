@@ -53,7 +53,7 @@ create table if not exists `Seller`(
 
 create table if not exists `Order`(
 	`id` int primary key auto_increment,
-	`createTime` timestamp not null,
+	`createTime` timestamp not null default current_timestamp,
 	`address` int not null,
 	foreign key (`address`) references `Address`(`id`)
 	on update cascade on delete no action,
@@ -68,9 +68,9 @@ create table if not exists `Item`(
 	`price` double not null default 0,
 	`quantity` int not null default 0,
 	`description` varchar(500),
-	`seller` int not null,
+	`seller` int,
 	foreign key (`seller`) references `Seller`(`role`)
-	on update cascade on delete cascade,
+	on update cascade on delete no action,
 	`order` int,
 	foreign key (`order`) references `Order`(`id`)
 	on update cascade on delete cascade

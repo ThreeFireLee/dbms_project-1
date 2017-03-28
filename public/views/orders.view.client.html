@@ -1,5 +1,7 @@
 <nav-bar></nav-bar>
 <h1>History of Orders</h1>
 <div>
-    {{vm.orders}}
+    <div ng-repeat="order in vm.orders">
+        {{order}}
+    </div>
 </div>

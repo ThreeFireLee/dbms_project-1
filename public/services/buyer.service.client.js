@@ -13,6 +13,8 @@
             listPayments: listPayments,
             listAddresses: listAddresses,
             addAddress: addAddress,
+            loadShippingAddresses: loadShippingAddresses,
+            placeOrder: placeOrder,
         };
 
         function loadFeaturedItems() {
@@ -46,6 +48,13 @@
 
         function addAddress(uid, address) {
             return $http.post(`/api/buyer/${uid}/address/create`, address);
+        }
+
+        function loadShippingAddresses(uid) {
+            return $http.get(`/api/buyer/${uid}/address/list`);
+        }
+        function  placeOrder(uid, order) {
+            return $http.post(`/api/buyer/${uid}/checkout`, order);
         }
     }
 })();

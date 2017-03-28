@@ -10,37 +10,37 @@ module.exports = function (db, dbQuery) {
 
     function register(req, res) {
         let user = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'register');
         query.add(
             "insert into `Role` (`email`, `password`) values (?, ?)",
             [user.email, user.password]);
         query.add(
             "insert into `Name` (`role`) values (?)",
-            ['@insertId']);
+            ['@[1].insertId']);
         query.add(
             "insert into ?? (`role`) values (?)",
-            [user.type, '@insertId']);
-        query.execute('register');
+            [user.type, '@[1].insertId']);
+        query.execute();
     }
 
     function login(req, res) {
         let user = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'login');
         query.add(
             "select r.id from `Role` as r where r.email=? and r.password=?",
             [user.email, user.password]);
-        query.execute('login');
+        query.execute();
     }
 
     function findUserById(req, res) {
         let uid = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'find user by id');
         query.add(
             "select r.email, r.age, m.first, m.middle, m.last " +
             "from `Role` as r, `Name` as m " +
             "where r.id=? and m.role=r.id",
             [uid]);
-        query.execute('find user by id');
+        query.execute();
     }
 
     function findUserTypeById(req, res) {
@@ -58,13 +58,13 @@ module.exports = function (db, dbQuery) {
     function updateProfile(req, res) {
         let uid = req.params.uid;
         let user = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'update profile');
         console.log(user);
         query.add(
             "update `Role` as r, `Name` as m " +
             "set r.email=?, r.age=?, m.first=?, m.middle=?, m.last=? " +
             "where r.id=m.role and r.id=?",
             [user.email, user.age, user.first, user.middle, user.last, uid]);
-        query.execute('update profile')
+        query.execute();
     }
 };

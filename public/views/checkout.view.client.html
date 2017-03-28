@@ -1,0 +1,33 @@
+<nav-bar></nav-bar>
+<h1>Checkout</h1>
+
+<div ng-if="vm.shoppingCartItems.length">
+    <h2>Shopping Cart</h2>
+    <div ng-repeat="cartItem in vm.shoppingCartItems">
+        {{cartItem}}
+    </div>
+</div>
+
+<h2>Shipping Address</h2>
+<div>
+    <div ng-repeat="addr in vm.shippingAddresses" class="radio">
+        <label>
+            <input type="radio" ng-model="vm.order.shippingAddress" ng-value="addr.id">
+            {{addr}}
+        </label>
+    </div>
+</div>
+
+<h2>Payment Method</h2>
+<div>
+    <div ng-repeat="pay in vm.paymentMethods" class="radio">
+        <label>
+            <input type="radio" ng-model="vm.order.paymentMethod" ng-value="pay.id">
+            {{pay}}
+        </label>
+    </div>
+</div>
+
+{{vm.order}}
+
+<button class="btn btn-block btn-primary" ng-click="vm.placeOrder()">Place Order</button>

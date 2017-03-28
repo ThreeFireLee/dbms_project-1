@@ -20,24 +20,45 @@ module.exports = function (db, dbQuery) {
     function searchItem(req, res) {
         let keyword = `%${req.params.keywords}%`;
         let query = dbQuery(res);
-        query.add("select i.id, i.name, i.price, i.quantity, i.description` " +
+        query.add(
+            "select i.id, i.name, i.price, i.quantity, i.description` " +
             "from `Item` as i where i.name like ? or i.description like ?",
             [keyword, keyword]);
         query.execute();
     }
 
     function checkout(req, res) {
-
+        let role = req.params.uid;
+        let order = req.body;
+        let query = dbQuery(res, 'place order');
+        query.add(
+            "insert into `Address` (`name`,`phone`,`postal`,`street`,`apt`,`state`,`country`) " +
+            "select a.name,a.phone,a.postal,a.street,a.apt,a.state,a.country " +
+            "from `Address` as a where a.id=?",
+            [order.shippingAddress]);
+        query.add(
+            "insert into `Order` (`address`,`buyer`) values (?,?)",
+            ['@[1].insertId', role]);
+        for (let item of order.items) {
+            query.add(
+                "insert into `Item` (`name`,`price`,`quantity`,`seller`,`order`) " +
+                "values (?,?,?,?,?)",
+                [item.name, item.price, item.quantity, item.seller, '@[2].insertId']);
+        }
+        query.add(
+            "delete from `ShoppingCart` where `buyer`=?",
+            [role]);
+        query.execute(2)
     }
 
     function listAddresses(req, res) {
         let role = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list addresses');
         query.add(
             "select a.id,a.name,a.phone,a.postal,a.street,a.apt,a.state,a.country " +
             "from `Address` as a where a.role=?",
             [role]);
-        query.execute('list addresses');
+        query.execute();
     }
 
     function createAddress(req, res) {
@@ -77,12 +98,12 @@ module.exports = function (db, dbQuery) {
 
     function listPayments(req, res) {
         let role = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list payments');
         query.add(
             "select p.id,p.creditType,p.cardNumber,p.validDate,p.cardHolder " +
             "from `Payment` as p where p.role=?",
             [role]);
-        query.execute('list payments');
+        query.execute();
     }
 
     function createPayment(req, res) {
@@ -142,7 +163,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let query = dbQuery(res);
         query.add(
-            "select i.id, i.name, i.price, c.quantity " +
+            "select i.id, i.name, i.price, c.quantity, i.seller " +
             "from `Buyer` as b, `Item` as i, `ShoppingCart` as c " +
             "where b.role=? and c.buyer=b.role and c.item=i.id",
             [role]);

@@ -14,14 +14,14 @@
             vm.updateProfile = updateProfile;
             vm.addAddress = addAddress;
             vm.addPayMethod = addPayMethod;
-            vm.reloadAddresses = reloadAddresses;
-            vm.reloadPayMethods = reloadPayMethods;
+            vm.loadAddresses = loadAddresses;
+            vm.loadPayMethods = loadPayMethods;
 
             UserService.findUserById(vm.uid).then(res => {
                 vm.user = res.data[0];
             });
-            vm.reloadAddresses();
-            vm.reloadPayMethods();
+            vm.loadAddresses();
+            vm.loadPayMethods();
         }
 
         function updateProfile() {
@@ -33,11 +33,11 @@
         function addAddress() {
             BuyerService.addAddress(vm.uid, vm.newAddress).then(res => {
                 vm.newAddress = {};
-                vm.reloadAddresses();
+                vm.loadAddresses();
             });
         }
 
-        function reloadAddresses() {
+        function loadAddresses() {
             BuyerService.listAddresses(vm.uid).then(res => {
                 vm.addresses = res.data;
             });
@@ -46,10 +46,10 @@
         function addPayMethod(){
             BuyerService.addPayMethod(vm.uid, vm.newPaymethod).then(res => {
                 vm.newPaymethod = {};
-                vm.reloadPayMethods();
+                vm.loadPayMethods();
             });
         }
-        function reloadPayMethods(){
+        function loadPayMethods(){
             BuyerService.listPayments(vm.uid).then(res => {
                 vm.paymethods = res.data;
             });
