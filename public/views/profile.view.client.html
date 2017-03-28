@@ -1,15 +1,17 @@
 <nav-bar></nav-bar>
 <h1>Profile</h1>
-<h2>Hello, {{vm.user.id}}</h2>
+<h4>Hello, {{vm.user.first}}</h4>
 {{vm.user}}
+<h3>Basic Information</h3>
 <form>
     <div class="form-group">
-        <label for="user_email">email</label>
+        <label for="user_email">Email</label>
         <input class="form-control" type="text" id="user_email" ng-model="vm.user.email">
     </div>
     <div class="form-group">
-        <label for="user_dob">date of birth</label>
-        <input class="form-control" type="text" id="user_dob" ng-model="vm.user.dateOfBirth">
+        <label for="user_dob">Age</label>
+        <input class="form-control" type="number" id="user_dob"
+               ng-model="vm.user.age">
     </div>
     <div class="form-group">
         <label for="user_first">First Name</label>
@@ -19,5 +21,70 @@
         <label for="user_last">Last Name</label>
         <input class="form-control" type="text" id="user_last" ng-model="vm.user.last">
     </div>
-    <input type="button" ng-click="vm.update()" value="update">
+    <input type="button" ng-click="vm.updateProfile()" value="update">
 </form>
+
+<h3>Addresses</h3>
+<form>
+    <div class="form-group">
+        <label for="addrName">Name</label>
+        <input type="text" id="addrName" class="form-control"
+               ng-model="vm.newAddress.name" required>
+    </div>
+    <div class="form-group">
+        <label for="addrPhone">Phone</label>
+        <input type="tel" id="addrPhone" class="form-control"
+               ng-model="vm.newAddress.phone" required>
+    </div>
+    <div class="form-group">
+        <label for="addrPostal">Postal</label>
+        <input type="text" id="addrPostal" class="form-control"
+               ng-model="vm.newAddress.postal" required>
+        <label for="addrStreet">Street</label>
+        <input type="text" id="addrStreet" class="form-control"
+               ng-model="vm.newAddress.street" required>
+        <label for="addrApt">Apt</label>
+        <input type="text" id="addrApt" class="form-control"
+               ng-model="vm.newAddress.apt" required>
+        <label for="addrState">State</label>
+        <input type="text" id="addrState" class="form-control"
+               ng-model="vm.newAddress.state" required>
+    </div>
+    <div class="form-group">
+        <label for="addrCountry">Country</label>
+        <input type="text" id="addrCountry" class="form-control"
+               ng-model="vm.newAddress.country" required>
+    </div>
+    <input type="button" ng-click="vm.addAddress()" value="add address">
+</form>
+
+<div ng-repeat="addr in vm.addresses">
+    {{addr}}
+</div>
+
+<h3>Payment Methods</h3>
+<form>
+    <div class="form-group">
+        <label for="payType">Credit Card Type</label>
+        <select id="payType" class="form-control" ng-model="vm.newPaymethod.creditType">
+            <option value="visa">VISA</option>
+            <option value="mastercard">MasterCard</option>
+            <option value="discovery">Discovery</option>
+            <option value="amex">AmericanExpress</option>
+        </select>
+        <label for="payNumber">Card Number</label>
+        <input type="text" id="payNumber" class="form-control"
+               ng-model="vm.newPaymethod.cardNumber">
+        <label for="payValidDate">Valid Date</label>
+        <input type="text" id="payValidDate" class="form-control"
+               ng-model="vm.newPaymethod.validDate">
+        <label for="payHolder">Card Holder</label>
+        <input type="text" id="payHolder" class="form-control"
+               ng-model="vm.newPaymethod.cardHolder">
+    </div>
+    <input type="button" ng-click="vm.addPayMethod()" value="add paymethod">
+</form>
+
+<div ng-repeat="paymethod in vm.paymethods">
+    {{paymethod}}
+</div>

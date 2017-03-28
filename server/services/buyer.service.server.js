@@ -3,9 +3,11 @@ module.exports = function (db, dbQuery) {
     return {
         searchItem: searchItem,
         checkout: checkout,
+        listAddresses: listAddresses,
         createAddress: createAddress,
         editAddress: editAddress,
         deleteAddress: deleteAddress,
+        listPayments: listPayments,
         createPayment: createPayment,
         editPayment: editPayment,
         deletePayment: deletePayment,
@@ -26,6 +28,16 @@ module.exports = function (db, dbQuery) {
 
     function checkout(req, res) {
 
+    }
+
+    function listAddresses(req, res) {
+        let role = req.params.uid;
+        let query = dbQuery(res);
+        query.add(
+            "select a.id,a.name,a.phone,a.postal,a.street,a.apt,a.state,a.country " +
+            "from `Address` as a where a.role=?",
+            [role]);
+        query.execute('list addresses');
     }
 
     function createAddress(req, res) {
@@ -61,6 +73,16 @@ module.exports = function (db, dbQuery) {
             "delete from `Address` as a where a.role=? and a.id=?",
             [role, addrID]);
         query.execute();
+    }
+
+    function listPayments(req, res) {
+        let role = req.params.uid;
+        let query = dbQuery(res);
+        query.add(
+            "select p.id,p.creditType,p.cardNumber,p.validDate,p.cardHolder " +
+            "from `Payment` as p where p.role=?",
+            [role]);
+        query.execute('list payments');
     }
 
     function createPayment(req, res) {

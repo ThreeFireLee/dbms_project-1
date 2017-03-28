@@ -10,6 +10,9 @@
             loadShoppingCart: loadShoppingCart,
             addItemToCart: addItemToCart,
             addPayMethod: addPayMethod,
+            listPayments: listPayments,
+            listAddresses: listAddresses,
+            addAddress: addAddress,
         };
 
         function loadFeaturedItems() {
@@ -29,8 +32,20 @@
             return $http.post(`/api/buyer/${uid}/shoppingcart/add`, item);
         }
 
-        function addPayMethod(){
+        function addPayMethod(uid, paymethod) {
+            return $http.post(`/api/buyer/${uid}/payment/create`, paymethod);
+        }
 
+        function listPayments(uid){
+            return $http.get(`/api/buyer/${uid}/payment/list`);
+        }
+
+        function listAddresses(uid) {
+            return $http.get(`/api/buyer/${uid}/address/list`);
+        }
+
+        function addAddress(uid, address) {
+            return $http.post(`/api/buyer/${uid}/address/create`, address);
         }
     }
 })();

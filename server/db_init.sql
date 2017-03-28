@@ -1,6 +1,6 @@
 create table if not exists `Role`(
 	`id` int primary key auto_increment,
-	`dateOfBirth` date,
+	`age` int,
 	`email` varchar(200) not null unique,
 	`password` varchar(200) not null
 );
@@ -53,7 +53,7 @@ create table if not exists `Seller`(
 
 create table if not exists `Order`(
 	`id` int primary key auto_increment,
-	`createTime` datetime not null,
+	`createTime` timestamp not null,
 	`address` int not null,
 	foreign key (`address`) references `Address`(`id`)
 	on update cascade on delete no action,

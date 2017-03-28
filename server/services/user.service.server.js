@@ -36,7 +36,7 @@ module.exports = function (db, dbQuery) {
         let uid = req.params.uid;
         let query = dbQuery(res);
         query.add(
-            "select r.email, r.dateOfBirth, m.first, m.middle, m.last " +
+            "select r.email, r.age, m.first, m.middle, m.last " +
             "from `Role` as r, `Name` as m " +
             "where r.id=? and m.role=r.id",
             [uid]);
@@ -62,9 +62,9 @@ module.exports = function (db, dbQuery) {
         console.log(user);
         query.add(
             "update `Role` as r, `Name` as m " +
-            "set r.email=?, r.dateOfBirth=?, m.first=?, m.middle=?, m.last=? " +
+            "set r.email=?, r.age=?, m.first=?, m.middle=?, m.last=? " +
             "where r.id=m.role and r.id=?",
-            [user.email, user.dateOfBirth, user.first, user.middle, user.last, uid]);
+            [user.email, user.age, user.first, user.middle, user.last, uid]);
         query.execute('update profile')
     }
 };
