@@ -16,6 +16,8 @@
             {{addr}}
         </label>
     </div>
+    <a href="#!{{vm.shared.getRoute('profile')}}#shippingAddresses"
+       class="btn btn-default">add address</a>
 </div>
 
 <h2>Payment Method</h2>
@@ -26,6 +28,8 @@
             {{pay}}
         </label>
     </div>
+    <a href="#!{{vm.shared.getRoute('profile')}}#paymentMethods"
+       class="btn btn-default">add payment</a>
 </div>
 
 {{vm.order}}
