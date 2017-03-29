@@ -9,8 +9,8 @@
         vm.shared.initController(vm, init);
 
         function init() {
+            vm.showAddInventory = false;
             vm.newItem = {};
-            vm.newItemForm = false;
             vm.inventory = [];
             vm.createItem = createItem;
             vm.loadInventory = loadInventory;
@@ -21,8 +21,6 @@
         function createItem() {
             vm.newItem.seller = vm.uid;
             SellerService.createItem(vm.uid, vm.newItem).then(res => {
-                let insertId = res.data.insertId;
-                vm.newItemForm = false;
                 vm.newItem = {};
                 vm.loadInventory();
             });

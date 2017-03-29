@@ -9,6 +9,8 @@
         vm.shared.initController(vm, init);
 
         function init() {
+            vm.showAddAddress = false;
+            vm.showAddPaymethod = false;
             vm.newAddress = {};
             vm.newPaymethod = {};
             vm.updateProfile = updateProfile;
@@ -32,6 +34,7 @@
 
         function addAddress() {
             BuyerService.addAddress(vm.uid, vm.newAddress).then(res => {
+                vm.showAddAddress = false;
                 vm.newAddress = {};
                 vm.loadAddresses();
             });
@@ -45,6 +48,7 @@
 
         function addPayMethod(){
             BuyerService.addPayMethod(vm.uid, vm.newPaymethod).then(res => {
+                vm.showAddPaymethod = false;
                 vm.newPaymethod = {};
                 vm.loadPayMethods();
             });

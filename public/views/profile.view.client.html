@@ -1,7 +1,6 @@
 <nav-bar></nav-bar>
 <h1>Profile</h1>
 <h4>Hello, {{vm.user.first}}</h4>
-{{vm.user}}
 <h3>Basic Information</h3>
 <form>
     <div class="form-group">
@@ -21,11 +20,15 @@
         <label for="user_last">Last Name</label>
         <input class="form-control" type="text" id="user_last" ng-model="vm.user.last">
     </div>
-    <input type="button" ng-click="vm.updateProfile()" value="update">
+    <input type="button" ng-click="vm.updateProfile()" value="Save"
+           class="btn btn-primary btn-block">
 </form>
 
 <h3 id="shippingAddresses">Addresses</h3>
-<form>
+<button class="btn btn-sm btn-default"
+        ng-click="vm.showAddAddress = !vm.showAddAddress">add address
+</button>
+<form ng-if="vm.showAddAddress">
     <div class="form-group">
         <label for="addrName">Name</label>
         <input type="text" id="addrName" class="form-control"
@@ -55,15 +58,47 @@
         <input type="text" id="addrCountry" class="form-control"
                ng-model="vm.newAddress.country" required>
     </div>
-    <input type="button" ng-click="vm.addAddress()" value="add address">
+    <input type="button" ng-click="vm.addAddress()" value="Save"
+           class="btn btn-primary btn-block">
 </form>
 
-<div ng-repeat="addr in vm.addresses">
-    {{addr}}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Street</th>
+            <th>Apt#</th>
+            <th>State</th>
+            <th>Postal</th>
+            <th>Country</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="addr in vm.addresses">
+            <td>{{addr.name}}</td>
+            <td>{{addr.phone}}</td>
+            <td>{{addr.street}}</td>
+            <td>{{addr.apt}}</td>
+            <td>{{addr.state}}</td>
+            <td>{{addr.postal}}</td>
+            <td>{{addr.country}}</td>
+            <td>
+                <button class="btn btn-default btn-sm">edit</button>
+                <button class="btn btn-danger btn-sm">delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <h3 id="paymentMethods">Payment Methods</h3>
-<form>
+<button class="btn btn-sm btn-default"
+        ng-click="vm.showAddPaymethod = !vm.showAddPaymethod">add address
+</button>
+<form ng-if="vm.showAddPaymethod">
     <div class="form-group">
         <label for="payType">Credit Card Type</label>
         <select id="payType" class="form-control" ng-model="vm.newPaymethod.creditType">
@@ -82,9 +117,32 @@
         <input type="text" id="payHolder" class="form-control"
                ng-model="vm.newPaymethod.cardHolder">
     </div>
-    <input type="button" ng-click="vm.addPayMethod()" value="add paymethod">
+    <input type="button" ng-click="vm.addPayMethod()" value="Save"
+           class="btn btn-primary btn-block">
 </form>
 
-<div ng-repeat="paymethod in vm.paymethods">
-    {{paymethod}}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Card Holder</th>
+            <th>Credit Type</th>
+            <th>Card Number</th>
+            <th>Valid Date</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="paymethod in vm.paymethods">
+            <td>{{paymethod.cardHolder}}</td>
+            <td>{{paymethod.creditType}}</td>
+            <td>{{paymethod.cardNumber}}</td>
+            <td>{{paymethod.validDate}}</td>
+            <td>
+                <button class="btn btn-default btn-sm">edit</button>
+                <button class="btn btn-danger btn-sm">delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

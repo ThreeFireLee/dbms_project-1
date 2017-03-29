@@ -1,32 +1,54 @@
 <nav-bar></nav-bar>
 <h1>Your Inventory</h1>
-<button class="pull-right"
-        ng-click="vm.newItemForm = true">new item</button>
-<div ng-if="vm.newItemForm">
+
+<button class="btn btn-success"
+        ng-click="vm.showAddInventory = !vm.showAddInventory">Post New Item
+</button>
+<div ng-if="vm.showAddInventory">
     <form>
-        <div>
+        <div class="form-group">
             <label for="newItemName">Name:</label>
-            <input type="text" id="newItemName" ng-model="vm.newItem.name">
-        </div>
-        <div>
+            <input type="text" id="newItemName"
+                   ng-model="vm.newItem.name" class="form-control">
             <label for="newItemPrice">Price:</label>
-            <input type="number" id="newItemPrice" ng-model="vm.newItem.price">
-        </div>
-        <div>
+            <input type="number" id="newItemPrice"
+                   ng-model="vm.newItem.price" class="form-control">
             <label for="newItemQuantity">Quantity:</label>
-            <input type="number" id="newItemQuantity" ng-model="vm.newItem.quantity">
-        </div>
-        <div>
+            <input type="number" id="newItemQuantity"
+                   ng-model="vm.newItem.quantity" class="form-control">
             <label for="newItemDescription">Description:</label>
             <br>
             <textarea id="newItemDescription" cols="40" rows="10"
-                      ng-model="vm.newItem.description"></textarea>
+                      ng-model="vm.newItem.description" class="form-control"></textarea>
         </div>
-        <input type="button" value="Submit" ng-click="vm.createItem()">
-        <input type="button" value="Cancel" ng-click="vm.newItem = {}; vm.newItemForm = false">
+        <input class="btn btn-block btn-primary" type="button"
+               value="Post" ng-click="vm.createItem()">
     </form>
 </div>
 
-<div>
-    {{vm.inventory}}
+<h3>Items On Sale</h3>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th width="50%">Description</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="inv in vm.inventory">
+            <td>{{inv.name}}</td>
+            <td>{{inv.quantity}}</td>
+            <td>{{inv.description}}</td>
+            <td>{{inv.price | currency:"$":0}}</td>
+            <td>
+                <button class="btn btn-default btn-sm">edit</button>
+                <button class="btn btn-danger btn-sm">delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
