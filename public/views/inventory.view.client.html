@@ -22,7 +22,7 @@
                       ng-model="vm.newItem.description" class="form-control"></textarea>
         </div>
         <input class="btn btn-block btn-primary" type="button"
-               value="Post" ng-click="vm.createItem()">
+               value="Save" ng-click="vm.createItem()">
     </form>
 </div>
 
@@ -31,22 +31,24 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
+            <th>#</th>
             <th>Name</th>
-            <th>Quantity</th>
             <th width="50%">Description</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="inv in vm.inventory">
+            <td>{{inv.id}}</td>
             <td>{{inv.name}}</td>
-            <td>{{inv.quantity}}</td>
             <td>{{inv.description}}</td>
             <td>{{inv.price | currency:"$":0}}</td>
+            <td>{{inv.quantity}}</td>
             <td>
                 <button class="btn btn-default btn-sm">edit</button>
-                <button class="btn btn-danger btn-sm">delete</button>
+                <button class="btn btn-danger btn-sm" ng-click="vm.deleteItem(inv.id)">delete</button>
             </td>
         </tr>
         </tbody>

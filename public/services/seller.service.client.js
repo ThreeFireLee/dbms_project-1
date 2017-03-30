@@ -7,7 +7,9 @@
         return {
             createItem: createItem,
             listItems: listItems,
+            deleteItem:deleteItem,
             loadOrders: loadOrders,
+            getOrderItems: getOrderItems,
         };
 
         function createItem(uid, item) {
@@ -18,8 +20,16 @@
             return $http.get(`/api/seller/${uid}/item/list`);
         }
 
+        function deleteItem(uid, iid) {
+            return $http.delete(`/api/seller/${uid}/item/delete/${iid}`);
+        }
+
         function loadOrders(uid) {
             return $http.get(`/api/seller/${uid}/order/list`);
+        }
+
+        function  getOrderItems(uid, oid) {
+            return $http.get(`/api/seller/${uid}/order/${oid}/items`);
         }
     }
 })();

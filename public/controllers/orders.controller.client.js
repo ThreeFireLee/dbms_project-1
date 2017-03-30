@@ -17,16 +17,16 @@
 
         function loadOrders() {
             UserService.findUserTypeById(vm.uid).then(res => {
-                let userType = res.data[0].type
-                if (userType === 'Buyer') {
-                    BuyerService.loadOrders(vm.uid).then(res => {
-                        vm.orders = res.data;
-                    });
-                } else if (userType === 'Seller') {
-                    SellerService.loadOrders(vm.uid).then(res => {
-                        vm.orders = res.data;
-                    });
-                }
+                let userType = res.data[0].type;
+                let service = {'Buyer': BuyerService, 'Seller': SellerService};
+                service[userType].loadOrders(vm.uid).then(res => {
+                    vm.orders = res.data;
+                    for (let i = 0; i < vm.orders.length; i++) {
+                        service[userType].getOrderItems(vm.uid, vm.orders[i].id).then(res => {
+                            vm.orders[i].items = res.data;
+                        });
+                    }
+                });
             });
         }
 

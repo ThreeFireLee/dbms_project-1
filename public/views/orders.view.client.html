@@ -1,7 +1,22 @@
 <nav-bar></nav-bar>
 <h1>History of Orders</h1>
 <div>
-    <div ng-repeat="order in vm.orders">
-        {{order}}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <tr ng-repeat="order in vm.orders">
+                <td>
+                    <ul class="list-inline row">
+                        <li class="col-md-3">{{order.createTime}}</li>
+                        <li class="col-md-6">{{order.address}}</li>
+                        <li class="col-md-3">{{order.buyer}}</li>
+                    </ul>
+                    <ol>
+                        <li ng-repeat="item in order.items">
+                            {{item}}
+                        </li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>

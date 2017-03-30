@@ -15,6 +15,9 @@ module.exports = function (db, dbQuery) {
         featuredItems: featuredItems,
         listShoppingCartItems: listShoppingCartItems,
         addItemToCart: addItemToCart,
+        removeItemFromCart: removeItemFromCart,
+        updateItemInCart: updateItemInCart,
+        getOrderItems: getOrderItems,
     };
 
     function searchItem(req, res) {
@@ -145,7 +148,8 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let query = dbQuery(res);
         query.add(
-            "select o.id, o.createTime, o.address from `Order` as o where o.buyer=?",
+            "select o.id, o.createTime, o.address from `Order` as o where o.buyer=? " +
+            "order by o.createTime desc",
             [role]);
         query.execute();
     }
@@ -183,4 +187,37 @@ module.exports = function (db, dbQuery) {
         console.log(role, iid, quantity);
         query.execute();
     }
+
+    function removeItemFromCart(req, res) {
+        let role = req.params.uid;
+        let iid = req.params.iid;
+        let query = dbQuery(res, 'remove item from shopping cart');
+        query.add(
+            "delete from `ShoppingCart` where `buyer`=? and `item`=?",
+            [role, iid]);
+        query.execute();
+    }
+
+    function updateItemInCart(req, res) {
+        let role = req.params.uid;
+        let item = req.body;
+        let query = dbQuery(res, 'update item in shopping cart');
+        query.add(
+            "update `ShoppingCart` as c set c.quantity=? where c.buyer=? and c.item=?",
+            [item.quantity, role, item.id]);
+        query.execute();
+    }
+
+    function getOrderItems(req, res) {
+        let role = req.params.uid;
+        let orderId = req.params.oid;
+        let query = dbQuery(res, 'get order items');
+        query.add(
+            "select i.id, i.name, i.price, i.quantity " +
+            "from `Item` as i, `Order` as o " +
+            "where o.id=? and i.order=o.id and o.buyer=?",
+            [orderId, role]);
+        query.execute();
+    }
+
 };

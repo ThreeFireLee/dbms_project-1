@@ -11,6 +11,7 @@ module.exports = function (app, services) {
     app.put('/api/seller/:uid/item/edit/:iid', services.seller.editItem);
     app.delete('/api/seller/:uid/item/delete/:iid', services.seller.deleteItem);
     app.get('/api/seller/:uid/order/list', services.seller.listOrders);
+    app.get('/api/seller/:uid/order/:oid/items', services.seller.getOrderItems);
 
     app.get('/api/buyer/search/item/:keywords', services.buyer.searchItem);
     app.post('/api/buyer/:uid/checkout', services.buyer.checkout);
@@ -23,7 +24,10 @@ module.exports = function (app, services) {
     app.put('/api/buyer/:uid/payment/edit/:pid', services.buyer.editPayment);
     app.delete('/api/buyer/:uid/payment/delete/:pid', services.buyer.deletePayment);
     app.get('/api/buyer/:uid/order/list', services.buyer.listOrders);
+    app.get('/api/buyer/:uid/order/:oid/items', services.buyer.getOrderItems);
     app.get('/api/buyer/items/featured', services.buyer.featuredItems);
     app.get('/api/buyer/:uid/shoppingcart/list', services.buyer.listShoppingCartItems);
     app.post('/api/buyer/:uid/shoppingcart/add', services.buyer.addItemToCart);
+    app.delete('/api/buyer/:uid/shoppingcart/remove/:iid', services.buyer.removeItemFromCart);
+    app.put('/api/buyer/:uid/shoppingcart/update', services.buyer.updateItemInCart);
 };

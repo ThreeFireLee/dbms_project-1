@@ -13,6 +13,7 @@
             vm.newItem = {};
             vm.inventory = [];
             vm.createItem = createItem;
+            vm.deleteItem = deleteItem;
             vm.loadInventory = loadInventory;
 
             vm.loadInventory();
@@ -29,6 +30,12 @@
         function loadInventory() {
             SellerService.listItems(vm.uid).then(res => {
                 vm.inventory = res.data;
+            });
+        }
+
+        function deleteItem(iid) {
+            SellerService.deleteItem(vm.uid, iid).then(res => {
+                vm.loadInventory();
             });
         }
     }

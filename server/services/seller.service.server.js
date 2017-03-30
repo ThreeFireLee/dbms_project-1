@@ -6,6 +6,7 @@ module.exports = function (db, dbQuery) {
         editItem: editItem,
         deleteItem: deleteItem,
         listOrders: listOrders,
+        getOrderItems: getOrderItems,
     };
 
     function createItem(req, res) {
@@ -14,9 +15,8 @@ module.exports = function (db, dbQuery) {
         let query = dbQuery(res);
         query.add(
             "insert into `Item` " +
-            "(`name`, `price`, `quantity`, `description`, `seller`, `order`) " +
-            "values (?,?,?,?,?,?)",
-            [item.name, item.price, item.quantity, item.description, role, item.order]);
+            "(`name`, `price`, `quantity`, `description`, `seller`) values (?,?,?,?,?)",
+            [item.name, item.price, item.quantity, item.description, role]);
         query.execute();
     }
 
@@ -49,21 +49,34 @@ module.exports = function (db, dbQuery) {
         let itemID = req.params.iid;
         let query = dbQuery(res);
         query.add(
-            "delete from `Item` as i where i.id=? and i.seller=? and i.order is null",
+            "delete from `Item` where `id`=? and `seller`=? and `order` is null",
             [itemID, role]);
         query.execute();
     }
 
     function listOrders(req, res) {
         let role = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list orders');
         query.add(
             "select o.id,o.createTime,o.address,o.buyer from `Order` as o " +
             "where exists( " +
             "select * from `Item` as i " +
-            "where o.id=i.order and i.seller=?" +
-            ")",
+            "where o.id=i.order and i.seller=? " +
+            ") " +
+            "order by o.createTime desc",
             [role]);
+        query.execute();
+    }
+
+    function getOrderItems(req, res) {
+        let role = req.params.uid;
+        let orderId = req.params.oid;
+        let query = dbQuery(res, 'get order items');
+        query.add(
+            "select i.id, i.name, i.price, i.quantity " +
+            "from `Item` as i, `Order` as o " +
+            "where o.id=? and i.order=o.id and i.seller=?",
+            [orderId, role]);
         query.execute();
     }
 };

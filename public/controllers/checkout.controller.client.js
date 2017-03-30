@@ -16,6 +16,7 @@
             vm.loadShippingAddresses = loadShippingAddresses;
             vm.loadPayMethods = loadPayMethods;
             vm.placeOrder = placeOrder;
+            vm.getOrderTotal = getOrderTotal;
 
             vm.loadShoppingCart();
             vm.loadShippingAddresses();
@@ -46,6 +47,14 @@
                 let orderId = res.data.insertId;
                 $location.path(vm.shared.getRoute('orders'));
             });
+        }
+
+        function getOrderTotal() {
+            let total = 0;
+            for (let item of vm.shoppingCartItems){
+                total += item.price * item.quantity;
+            }
+            return total;
         }
     }
 
