@@ -18,6 +18,7 @@
             loadShippingAddresses: loadShippingAddresses,
             placeOrder: placeOrder,
             getOrderItems: getOrderItems,
+            searchItem: searchItem,
         };
 
         function loadFeaturedItems() {
@@ -71,6 +72,10 @@
 
         function getOrderItems(uid, oid) {
             return $http.get(`/api/buyer/${uid}/order/${oid}/items`);
+        }
+
+        function searchItem(ipt) {
+            return $http.get(`/api/buyer/items/search?keywords=${ipt}`);
         }
     }
 })();

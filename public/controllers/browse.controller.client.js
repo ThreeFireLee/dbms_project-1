@@ -9,6 +9,7 @@
         vm.shared.initController(vm, init);
 
         function init() {
+            vm.searchInput = '';
             vm.featuredItems = [];
             vm.shoppingCartItems = [];
             vm.loadFeaturedItems = loadFeaturedItems;
@@ -17,6 +18,7 @@
             vm.removeFromCart = removeFromCart;
             vm.updateItemInCart = updateItemInCart;
             vm.getOrderTotal = getOrderTotal;
+            vm.searchItem = searchItem;
 
             vm.loadFeaturedItems();
             vm.loadShoppingCart();
@@ -58,6 +60,12 @@
                 total += item.price * item.quantity;
             }
             return total;
+        }
+
+        function searchItem() {
+            BuyerService.searchItem(vm.searchInput).then(res => {
+                vm.searchResults = res.data;
+            });
         }
     }
 

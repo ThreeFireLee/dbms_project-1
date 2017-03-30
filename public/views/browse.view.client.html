@@ -43,19 +43,30 @@
 </div>
 <div>
     <h2>Featured Items</h2>
+    <div class="input-group">
+        <input type="text" class="form-control input-lg" ng-model="vm.searchInput">
+        <b class="input-group-btn">
+            <button class="btn btn-primary btn-lg" ng-click="vm.searchItem()">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </button>
+        </b>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
             <tr>
                 <th>Name</th>
+                <th width="50%">Description</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="ftItem in vm.featuredItems">
+            <tr ng-repeat="ftItem in (vm.searchResults || vm.featuredItems)">
                 <td>{{ftItem.name}}</td>
+                <td>{{ftItem.description}}</td>
                 <td>{{ftItem.price | currency:"$":0}}</td>
                 <td>
                     <input type="number" style="width: 4em" ng-model="ftItem.quantity">

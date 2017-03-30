@@ -1,12 +1,29 @@
 <h1>Login</h1>
-<form>
-    <input type="text" placeholder="email" ng-model="vm.user.email">
-    <input type="password" placeholder="password" ng-model="vm.user.password">
-    <input type="button" value="Login" ng-click="vm.login()">
-</form>
-<button ng-click="vm.register()">register now</button>
 <div ng-show="vm.error"
      class="alert alert-dismissible alert-danger alertBox" role="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>{{vm.error}}</strong>
 </div>
+<form>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><b>Email</b></span>
+            <input type="text" ng-model="vm.user.email" class="form-control input-lg"
+                   placeholder="alice@wonderland.com">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><b>Password</b></span>
+            <input type="password" placeholder="YourPassword" ng-model="vm.user.password"
+                   class="form-control input-lg">
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="button" class="btn btn-primary btn-block btn-lg"
+               value="Login" ng-click="vm.login()">
+    </div>
+</form>
+<button class="btn btn-success btn-block btn-lg" ng-click="vm.register()">
+    Register Now</button>
+

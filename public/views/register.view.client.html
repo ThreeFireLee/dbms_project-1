@@ -1,12 +1,31 @@
 <h1>Register</h1>
 <form>
-    <input type="email" placeholder="email" ng-model="vm.user.email">
-    <input type="password" placeholder="password" ng-model="vm.user.password">
-    <label for="type">User Type</label>
-    <select id="type" ng-model="vm.user.type">
-        <option selected>Buyer</option>
-        <option>Seller</option>
-    </select>
-    <input type="button" value="Register" ng-click="vm.register()">
+    <div class="form-group">
+        <div class="input-group">
+            <label for="email" class="input-group-addon"><b>Email</b></label>
+            <input id="email" type="email" placeholder="alice@wonderland.com"
+                   class="form-control input-lg" ng-model="vm.user.email">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <label for="password" class="input-group-addon"><b>Password</b></label>
+            <input id="password" type="password" placeholder="YourPassword"
+                   class="form-control input-lg" ng-model="vm.user.password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <label for="type" class="input-group-addon"><b>User Type</b></label>
+            <select id="type" ng-model="vm.user.type" class="form-control input-lg">
+                <option selected>Buyer</option>
+                <option>Seller</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="button" value="Register" ng-click="vm.register()"
+               class="btn btn-block btn-lg btn-success">
+    </div>
 </form>
-<button ng-click="vm.login()">log-in now</button>
+<button ng-click="vm.login()" class="btn btn-primary btn-block btn-lg">Login Now</button>

@@ -21,12 +21,14 @@ module.exports = function (db, dbQuery) {
     };
 
     function searchItem(req, res) {
-        let keyword = `%${req.params.keywords}%`;
+        let keywords = `%${req.query.keywords}%`;
         let query = dbQuery(res);
         query.add(
-            "select i.id, i.name, i.price, i.quantity, i.description` " +
-            "from `Item` as i where i.name like ? or i.description like ?",
-            [keyword, keyword]);
+            "select i.id, i.name, i.price, i.description " +
+            "from `Item` as i " +
+            "where (i.name like ? or i.description like ?) and i.order is null " +
+            "order by i.id desc",
+            [keywords, keywords]);
         query.execute();
     }
 
@@ -47,6 +49,9 @@ module.exports = function (db, dbQuery) {
                 "insert into `Item` (`name`,`price`,`quantity`,`seller`,`order`) " +
                 "values (?,?,?,?,?)",
                 [item.name, item.price, item.quantity, item.seller, '@[2].insertId']);
+            query.add(
+                "update `Item` set `quantity`=`quantity`-? where id=?",
+                [item.quantity, item.id]);
         }
         query.add(
             "delete from `ShoppingCart` where `buyer`=?",
@@ -157,8 +162,9 @@ module.exports = function (db, dbQuery) {
     function featuredItems(req, res) {
         let query = dbQuery(res);
         query.add(
-            "select i.id, i.name, i.price from `Item` as i " +
-            "where i.order is null order by id desc",
+            "select i.id, i.name, i.price, i.description " +
+            "from `Item` as i where i.order is null order by id desc " +
+            "limit 20",
             []);
         query.execute();
     }

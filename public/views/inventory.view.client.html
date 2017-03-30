@@ -31,24 +31,40 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>#</th>
+            <th width="5%">#</th>
             <th>Name</th>
             <th width="50%">Description</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Action</th>
+            <th width="8%">Price</th>
+            <th width="8%">Quantity</th>
+            <th width="15%">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="inv in vm.inventory">
             <td>{{inv.id}}</td>
-            <td>{{inv.name}}</td>
-            <td>{{inv.description}}</td>
-            <td>{{inv.price | currency:"$":0}}</td>
-            <td>{{inv.quantity}}</td>
+            <td ng-if="!inv.edit">{{inv.name}}</td>
+            <td ng-if="inv.edit">
+                <input type="text" ng-model="inv.name">
+            </td>
+            <td ng-if="!inv.edit">{{inv.description}}</td>
+            <td ng-if="inv.edit">
+                <textarea cols="60" rows="5">{{inv.description}}</textarea>
+            </td>
+            <td ng-if="!inv.edit">{{inv.price | currency:"$":0}}</td>
+            <td ng-if="inv.edit">
+                <input type="number" style="width:4em" ng-model="inv.price">
+            </td>
+            <td ng-if="!inv.edit">{{inv.quantity}}</td>
+            <td ng-if="inv.edit">
+                <input type="number" style="width:4em" ng-model="inv.quantity">
+            </td>
             <td>
-                <button class="btn btn-default btn-sm">edit</button>
-                <button class="btn btn-danger btn-sm" ng-click="vm.deleteItem(inv.id)">delete</button>
+                <button ng-if="!inv.edit" class="btn btn-primary btn-sm"
+                        ng-click="inv.edit=true">edit</button>
+                <button ng-if="inv.edit" class="btn btn-success btn-sm"
+                        ng-click="vm.updateItem(inv); inv.edit=false">save</button>
+                <button class="btn btn-danger btn-sm"
+                        ng-click="vm.deleteItem(inv.id)">delete</button>
             </td>
         </tr>
         </tbody>

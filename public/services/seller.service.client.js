@@ -8,6 +8,7 @@
             createItem: createItem,
             listItems: listItems,
             deleteItem:deleteItem,
+            updateItem: updateItem,
             loadOrders: loadOrders,
             getOrderItems: getOrderItems,
         };
@@ -22,6 +23,10 @@
 
         function deleteItem(uid, iid) {
             return $http.delete(`/api/seller/${uid}/item/delete/${iid}`);
+        }
+
+        function updateItem(uid, iid, item) {
+            return $http.put(`/api/seller/${uid}/item/edit/${iid}`, item);
         }
 
         function loadOrders(uid) {

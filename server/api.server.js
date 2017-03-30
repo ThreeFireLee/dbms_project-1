@@ -30,4 +30,5 @@ module.exports = function (app, services) {
     app.post('/api/buyer/:uid/shoppingcart/add', services.buyer.addItemToCart);
     app.delete('/api/buyer/:uid/shoppingcart/remove/:iid', services.buyer.removeItemFromCart);
     app.put('/api/buyer/:uid/shoppingcart/update', services.buyer.updateItemInCart);
+    app.get('/api/buyer/items/search', services.buyer.searchItem);
 };
