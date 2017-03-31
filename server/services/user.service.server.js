@@ -6,6 +6,7 @@ module.exports = function (db, dbQuery) {
         findUserById: findUserById,
         updateProfile: updateProfile,
         findUserTypeById: findUserTypeById,
+        getAddress: getAddress,
     };
 
     function register(req, res) {
@@ -65,6 +66,16 @@ module.exports = function (db, dbQuery) {
             "set r.email=?, r.age=?, m.first=?, m.middle=?, m.last=? " +
             "where r.id=m.role and r.id=?",
             [user.email, user.age, user.first, user.middle, user.last, uid]);
+        query.execute();
+    }
+
+    function getAddress(req, res) {
+        let aid = req.params.aid;
+        let query = dbQuery(res, 'get address');
+        query.add(
+            "select a.id,a.name,a.phone,a.postal,a.street,a.apt,a.state,a.country " +
+            "from `Address` as a where a.id=?",
+            [aid]);
         query.execute();
     }
 };

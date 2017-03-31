@@ -22,6 +22,9 @@
                 service[userType].loadOrders(vm.uid).then(res => {
                     vm.orders = res.data;
                     for (let i = 0; i < vm.orders.length; i++) {
+                        UserService.getAddress(vm.orders[i].address).then(res => {
+                            vm.orders[i].address = res.data;
+                        });
                         service[userType].getOrderItems(vm.uid, vm.orders[i].id).then(res => {
                             vm.orders[i].items = res.data;
                         });

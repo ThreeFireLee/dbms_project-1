@@ -30,7 +30,7 @@ create table if not exists `Address`(
 
 create table if not exists `Payment`(
 	`id` int primary key auto_increment,
-	`creditType` enum("visa", "mastercard", "discovery", "amex") not null,
+	`creditType` enum("visa", "mastercard", "discover", "amex") not null,
 	`cardNumber` varchar(200) not null,
 	`validDate` varchar(200) not null,
 	`cardHolder` varchar(200) not null,

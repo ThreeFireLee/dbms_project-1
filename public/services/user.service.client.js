@@ -10,6 +10,7 @@
             login: login,
             updateProfile: updateProfile,
             findUserTypeById: findUserTypeById,
+            getAddress: getAddress,
         };
 
         function register(user) {
@@ -32,5 +33,8 @@
             return $http.get(`/api/user/id/${uid}/type`);
         }
 
+        function getAddress(aid) {
+            return $http.get(`/api/user/get/address/${aid}`);
+        }
     }
 })();

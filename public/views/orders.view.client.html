@@ -1,22 +1,17 @@
 <nav-bar></nav-bar>
 <h1>History of Orders</h1>
 <div>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <tr ng-repeat="order in vm.orders">
-                <td>
-                    <ul class="list-inline row">
-                        <li class="col-md-3">{{order.createTime}}</li>
-                        <li class="col-md-6">{{order.address}}</li>
-                        <li class="col-md-3">{{order.buyer}}</li>
-                    </ul>
-                    <ol>
-                        <li ng-repeat="item in order.items">
-                            {{item}}
-                        </li>
-                    </ol>
-                </td>
-            </tr>
-        </table>
+    <div class="panel panel-default" ng-repeat="order in vm.orders">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{order.createTime}}</h3>
+            {{order.address}}
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in order.items">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

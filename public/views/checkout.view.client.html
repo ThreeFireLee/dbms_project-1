@@ -3,7 +3,6 @@
 
 <div ng-if="vm.shoppingCartItems.length">
     <h2>Shopping Cart</h2>
-    {{vm.shoppingCartItems}}
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
@@ -32,28 +31,33 @@
 
 <h2>Shipping Address</h2>
 <div>
-    <div ng-repeat="addr in vm.shippingAddresses" class="radio">
-        <label>
-            <input type="radio" ng-model="vm.order.shippingAddress" ng-value="addr.id">
-            {{addr}}
-        </label>
-    </div>
+    <ul class="list-group">
+        <li ng-repeat="addr in vm.shippingAddresses" class="list-group-item radio">
+            <label>
+                <input type="radio" ng-model="vm.order.shippingAddress" ng-value="addr.id">
+                <b>{{addr.name}} - ({{addr.phone}})</b><br>
+                {{addr.street}} <span ng-if="addr.apt">Apt#{{addr.apt}}</span>
+                {{addr.state}}, {{addr.postal}}, {{addr.country}}
+            </label>
+        </li>
+    </ul>
     <a href="#!{{vm.shared.getRoute('profile')}}#shippingAddresses"
        class="btn btn-default">add address</a>
 </div>
 
 <h2>Payment Method</h2>
 <div>
-    <div ng-repeat="pay in vm.paymentMethods" class="radio">
-        <label>
-            <input type="radio" ng-model="vm.order.paymentMethod" ng-value="pay.id">
-            {{pay}}
-        </label>
-    </div>
+    <ul class="list-group">
+        <li ng-repeat="pay in vm.paymentMethods" class="list-group-item radio">
+            <label>
+                <input type="radio" ng-model="vm.order.paymentMethod" ng-value="pay.id">
+                <b>[{{pay.creditType | uppercase}}]</b> #{{pay.cardNumber}}
+                by <b><i>{{pay.cardHolder}}</i></b>
+            </label>
+        </li>
+    </ul>
     <a href="#!{{vm.shared.getRoute('profile')}}#paymentMethods"
        class="btn btn-default">add payment</a>
 </div>
-
-{{vm.order}}
 
 <button class="btn btn-block btn-primary" ng-click="vm.placeOrder()">Place Order</button>
