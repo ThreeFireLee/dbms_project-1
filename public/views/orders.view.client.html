@@ -1,17 +1,29 @@
 <nav-bar></nav-bar>
 <h1>History of Orders</h1>
 <div>
-    <div class="panel panel-default" ng-repeat="order in vm.orders">
+    <div class="panel panel-success" ng-repeat="order in vm.orders">
         <div class="panel-heading">
-            <h3 class="panel-title">{{order.createTime}}</h3>
+            <h3 class="panel-title">Create Time: {{order.createTime}}</h3>
+            Buyer: {{order.address.name}} &nbsp;&nbsp;&nbsp; Tel: {{order.address.phone}}
             {{order.address}}
         </div>
         <div class="panel-body">
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="item in order.items">
-                    {{item}}
-                </li>
-            </ul>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">Item Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in order.items">
+                    <td>{{item.name}}</td>
+                    <td>{{item.price | currency:"$":0}}</td>
+                    <td>{{item.quantity}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

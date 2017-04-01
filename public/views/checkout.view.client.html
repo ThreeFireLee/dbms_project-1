@@ -31,6 +31,8 @@
 
 <h2>Shipping Address</h2>
 <div>
+    <a href="#!{{vm.shared.getRoute('profile')}}#shippingAddresses"
+       class="btn btn-default">add address</a>
     <ul class="list-group">
         <li ng-repeat="addr in vm.shippingAddresses" class="list-group-item radio">
             <label>
@@ -41,12 +43,12 @@
             </label>
         </li>
     </ul>
-    <a href="#!{{vm.shared.getRoute('profile')}}#shippingAddresses"
-       class="btn btn-default">add address</a>
 </div>
 
 <h2>Payment Method</h2>
 <div>
+    <a href="#!{{vm.shared.getRoute('profile')}}#paymentMethods"
+       class="btn btn-default">add payment</a>
     <ul class="list-group">
         <li ng-repeat="pay in vm.paymentMethods" class="list-group-item radio">
             <label>
@@ -56,8 +58,6 @@
             </label>
         </li>
     </ul>
-    <a href="#!{{vm.shared.getRoute('profile')}}#paymentMethods"
-       class="btn btn-default">add payment</a>
 </div>
 
-<button class="btn btn-block btn-primary" ng-click="vm.placeOrder()">Place Order</button>
+<button class="btn btn-block btn-primary btn-lg" ng-click="vm.placeOrder()">Place Order</button>

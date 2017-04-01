@@ -48,7 +48,7 @@
             </td>
             <td ng-if="!inv.edit">{{inv.description}}</td>
             <td ng-if="inv.edit">
-                <textarea cols="60" rows="5">{{inv.description}}</textarea>
+                <textarea cols="60" rows="5" ng-model="inv.description"></textarea>
             </td>
             <td ng-if="!inv.edit">{{inv.price | currency:"$":0}}</td>
             <td ng-if="inv.edit">

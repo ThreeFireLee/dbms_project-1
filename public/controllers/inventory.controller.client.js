@@ -42,6 +42,7 @@
 
         function updateItem(item) {
             let iid = item.id;
+            console.log(item.description);
             SellerService.updateItem(vm.uid, iid, item).then(res => {
             });
         }
