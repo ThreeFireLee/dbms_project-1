@@ -9,6 +9,7 @@ All database queries locate in serverside services:
   - buyer.service.server.js
   - seller.service.server.js
   - user.service.server.js
+Each database query is implemented as a transaction to guarantee integrity.
   
 An overlook of all serverside APIs is at:
 - /server/api.server.js
