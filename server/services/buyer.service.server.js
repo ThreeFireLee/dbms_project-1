@@ -99,7 +99,7 @@ module.exports = function (db, dbQuery) {
         let addrID = req.params.aid;
         let query = dbQuery(res);
         query.add(
-            "delete from `Address` as a where a.role=? and a.id=?",
+            "delete from `Address` where `role`=? and `id`=?",
             [role, addrID]);
         query.execute();
     }
@@ -144,7 +144,7 @@ module.exports = function (db, dbQuery) {
         let payID = req.params.pid;
         let query = dbQuery(res);
         query.add(
-            "delete from `Payment` as p where p.role=? and p.id=?",
+            "delete from `Payment` where `role`=? and `id`=?",
             [role, payID]);
         query.execute();
     }

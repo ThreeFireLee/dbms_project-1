@@ -86,7 +86,9 @@
             <td>{{addr.postal}}</td>
             <td>{{addr.country}}</td>
             <td>
-                <button class="btn btn-danger btn-sm">delete</button>
+                <button class="btn btn-danger btn-sm"
+                        ng-click="vm.deleteAddress(addr.id)">delete
+                </button>
             </td>
         </tr>
         </tbody>
@@ -138,7 +140,9 @@
             <td>{{paymethod.cardNumber}}</td>
             <td>{{paymethod.validDate}}</td>
             <td>
-                <button class="btn btn-danger btn-sm">delete</button>
+                <button class="btn btn-danger btn-sm"
+                        ng-click="vm.deletePayment(paymethod.id)">delete
+                </button>
             </td>
         </tr>
         </tbody>

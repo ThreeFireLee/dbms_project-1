@@ -11,6 +11,8 @@
             updateProfile: updateProfile,
             findUserTypeById: findUserTypeById,
             getAddress: getAddress,
+            deleteAddress: deleteAddress,
+            deletePayment: deletePayment,
         };
 
         function register(user) {
@@ -35,6 +37,14 @@
 
         function getAddress(aid) {
             return $http.get(`/api/user/get/address/${aid}`);
+        }
+
+        function deleteAddress(uid, aid) {
+            return $http.delete(`/api/buyer/${uid}/address/delete/${aid}`);
+        }
+
+        function deletePayment(uid, pid) {
+            return $http.delete(`/api/buyer/${uid}/payment/delete/${pid}`);
         }
     }
 })();

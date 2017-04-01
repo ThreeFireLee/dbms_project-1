@@ -18,6 +18,8 @@
             vm.addPayMethod = addPayMethod;
             vm.loadAddresses = loadAddresses;
             vm.loadPayMethods = loadPayMethods;
+            vm.deleteAddress = deleteAddress;
+            vm.deletePayment = deletePayment;
 
             UserService.findUserById(vm.uid).then(res => {
                 vm.user = res.data[0];
@@ -59,6 +61,18 @@
         function loadPayMethods() {
             BuyerService.listPayments(vm.uid).then(res => {
                 vm.paymethods = res.data;
+            });
+        }
+
+        function deleteAddress(aid) {
+            UserService.deleteAddress(vm.uid, aid).then(res => {
+                vm.loadAddresses();
+            });
+        }
+
+        function deletePayment(pid) {
+            UserService.deletePayment(vm.uid, pid).then(res => {
+                vm.loadPayMethods();
             });
         }
     }
