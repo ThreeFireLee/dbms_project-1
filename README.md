@@ -14,3 +14,6 @@ An overlook of all serverside APIs is at:
 - /server/api.server.js
 
 Each API entry maps to a handler defined in the three services.
+
+Database initializing script is at:
+- /server/db_init.sql
