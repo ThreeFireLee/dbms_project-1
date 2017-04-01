@@ -18,3 +18,7 @@ Each API entry maps to a handler defined in the three services.
 
 Database initializing script is at:
 - /server/db_init.sql
+
+## Try it now
+The project is hosted on AWS-EC2, which is accessible at
+[http://54.70.113.60:3000](http://54.70.113.60:3000)
