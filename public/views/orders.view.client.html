@@ -5,7 +5,10 @@
         <div class="panel-heading">
             <h3 class="panel-title">Create Time: {{order.createTime}}</h3>
             Buyer: {{order.address.name}} &nbsp;&nbsp;&nbsp; Tel: {{order.address.phone}}
-            {{order.address}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Address: {{order.address.street}}&nbsp;&nbsp;
+            <span ng-if="order.address.apt">Apt#{{order.address.apt}}</span>&nbsp;&nbsp;
+            {{order.address.state}} {{order.address.postal}}, {{order.address.country}}
         </div>
         <div class="panel-body">
             <table class="table">
