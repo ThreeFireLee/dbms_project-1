@@ -46,7 +46,7 @@ module.exports = function (db, dbQuery) {
 
     function findUserTypeById(req, res) {
         let uid = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'find user type');
         query.add(
             "select case " +
             "when exists(select * from `Buyer` where `role`=?) then 'Buyer' " +

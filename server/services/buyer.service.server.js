@@ -22,7 +22,7 @@ module.exports = function (db, dbQuery) {
 
     function searchItem(req, res) {
         let keywords = `%${req.query.keywords}%`;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'search item');
         query.add(
             "select i.id, i.name, i.price, i.description " +
             "from `Item` as i " +
@@ -72,7 +72,7 @@ module.exports = function (db, dbQuery) {
     function createAddress(req, res) {
         let role = req.params.uid;
         let addr = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'add address');
         query.add(
             "insert into `Address` " +
             "(`name`,`phone`,`postal`,`street`,`apt`,`state`,`country`,`role`) " +
@@ -85,7 +85,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let addrID = req.params.aid;
         let addr = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'edit address');
         query.add(
             "update `Address` as a set "
             + "a.name=?, a.phone=?, a.postal=?, a.street=?, a.apt=?, a.state=?, a.country=? "
@@ -97,7 +97,7 @@ module.exports = function (db, dbQuery) {
     function deleteAddress(req, res) {
         let role = req.params.uid;
         let addrID = req.params.aid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'delete address');
         query.add(
             "delete from `Address` where `role`=? and `id`=?",
             [role, addrID]);
@@ -117,7 +117,7 @@ module.exports = function (db, dbQuery) {
     function createPayment(req, res) {
         let role = req.params.uid;
         let pay = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'add pay method');
         query.add(
             "insert into `Payment` " +
             "(`creditType`,`cardNumber`,`validDate`,`cardHolder`,`role`) " +
@@ -130,7 +130,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let payID = req.params.pid;
         let pay = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'edit pay method');
         query.add(
             "update `Payment` as p set " +
             "p.creditType=?, p.cardNumber=?, p.validDate=?, p.cardHolder=? " +
@@ -142,7 +142,7 @@ module.exports = function (db, dbQuery) {
     function deletePayment(req, res) {
         let role = req.params.uid;
         let payID = req.params.pid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'delete pay method');
         query.add(
             "delete from `Payment` where `role`=? and `id`=?",
             [role, payID]);
@@ -151,7 +151,7 @@ module.exports = function (db, dbQuery) {
 
     function listOrders(req, res) {
         let role = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list orders');
         query.add(
             "select o.id, o.createTime, o.address from `Order` as o where o.buyer=? " +
             "order by o.createTime desc",
@@ -160,7 +160,7 @@ module.exports = function (db, dbQuery) {
     }
 
     function featuredItems(req, res) {
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list featured items');
         query.add(
             "select i.id, i.name, i.price, i.description " +
             "from `Item` as i where i.order is null order by id desc " +
@@ -171,7 +171,7 @@ module.exports = function (db, dbQuery) {
 
     function listShoppingCartItems(req, res) {
         let role = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list shopping cart items');
         query.add(
             "select i.id, i.name, i.price, c.quantity, i.seller " +
             "from `Buyer` as b, `Item` as i, `ShoppingCart` as c " +
@@ -184,7 +184,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let iid = req.body.iid;
         let quantity = req.body.quantity;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'add item to shopping cart');
         query.add(
             "insert into `ShoppingCart` " +
             "(`buyer`, `item`, `quantity`) values(?, ?, ?) " +

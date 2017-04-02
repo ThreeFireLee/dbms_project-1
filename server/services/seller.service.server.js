@@ -12,7 +12,7 @@ module.exports = function (db, dbQuery) {
     function createItem(req, res) {
         let role = req.params.uid;
         let item = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'create item');
         query.add(
             "insert into `Item` " +
             "(`name`, `price`, `quantity`, `description`, `seller`) values (?,?,?,?,?)",
@@ -22,7 +22,7 @@ module.exports = function (db, dbQuery) {
 
     function listItems(req, res) {
         let role = req.params.uid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'list items');
         query.add(
             "select i.id,i.name,i.price,i.quantity,i.description from `Item` as i " +
             "where i.seller=? and i.order is null " +
@@ -35,7 +35,7 @@ module.exports = function (db, dbQuery) {
         let role = req.params.uid;
         let itemID = req.params.iid;
         let item = req.body;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'edit item');
         query.add(
             "update `Item` as i set " +
             "i.name=?, i.price=?, i.quantity=?, i.description=? " +
@@ -47,7 +47,7 @@ module.exports = function (db, dbQuery) {
     function deleteItem(req, res) {
         let role = req.params.uid;
         let itemID = req.params.iid;
-        let query = dbQuery(res);
+        let query = dbQuery(res, 'delete item');
         query.add(
             "delete from `Item` where `id`=? and `seller`=? and `order` is null",
             [itemID, role]);
